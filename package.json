@@ -1,0 +1,10 @@
+{
+    "name": "comback",
+    "version": "0.0.1",
+    "scripts": {
+      "dev": "export NODE_ENV=development && cd be && nodemon",
+      "serve": "cd fe && yarn serve",
+      "pr": "NODE_ENV=production PORT=80 node ./be/bin/www"
+    },
+    "dependencies": {}
+  }
