@@ -3,8 +3,8 @@
     <v-layout row wrap>
       <v-flex xs12 lg12>
         <v-card>
-          <v-card-title>
-            마음의 편지함
+          <v-toolbar class="elevation-0" dark src="@/assets/wide_background.jpg">
+            <div class="title">마음의 편지함</div>
             <div class="flex-grow-1"></div>
             <v-text-field
               v-model="search"
@@ -13,7 +13,7 @@
               single-line
               hide-details
             ></v-text-field>
-          </v-card-title>
+          </v-toolbar>
           <v-data-table
             :headers="headers"
             :items="letters"

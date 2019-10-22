@@ -3,8 +3,8 @@
     <v-layout row wrap>
       <v-flex xs12 lg12>
         <v-card>
-          <v-card-title>
-            <div class="condensed light">건의사항</div>
+          <v-toolbar class="elevation-0 pr-3" dark src="@/assets/wide_background.jpg">
+            <div class="title condensed light">건의사항</div>
             <div class="flex-grow-1"></div>
             <v-text-field
               v-model="search"
@@ -13,7 +13,7 @@
               single-line
               hide-details
             ></v-text-field>
-          </v-card-title>
+          </v-toolbar>
           <v-data-table
             :headers="headers"
             :items="articles"
@@ -27,10 +27,10 @@
               <div @click="rowClick(item)">{{ item.title }}</div>
             </template>
             <template v-slot:item.cnt.view="{ item }">
-              <v-chip dark label color="warning">{{ item.cnt.view }}</v-chip>
+              <v-chip dark label>{{ item.cnt.view }}</v-chip>
             </template>
             <template v-slot:item.cnt.like="{ item }">
-              <v-chip dark label color="warning">{{ item.cnt.like }}</v-chip>
+              <v-chip dark label>{{ item.cnt.like }}</v-chip>
             </template>
             <template v-slot:item._id="{ item }">
               <v-chip dark label>{{ id2date(item._id) }}</v-chip>
@@ -38,7 +38,7 @@
           </v-data-table>
         </v-card>
         <div class="text-right">
-          <v-btn class="mt-3" color="green darken-1" dark @click="mdUp">글쓰기</v-btn>
+          <v-btn class="mt-3" color="secondary" dark @click="mdUp">글쓰기</v-btn>
         </div>
       </v-flex>
       <v-dialog v-model="dialog" persistent max-width="600px">

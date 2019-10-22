@@ -3,7 +3,7 @@
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md4>
         <v-card class="elevation-12">
-          <v-toolbar dark color="green darken-3">
+          <v-toolbar class="elevation-0 pr-3" dark src="@/assets/wide_background.jpg">
             <v-toolbar-title>로그인</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>

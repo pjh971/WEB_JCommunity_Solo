@@ -106,7 +106,7 @@ router.get('/like/:_id', function(req, res, next) {
       res.send({ success: 'failed', msg: e.message });
     });
 });
-
+// 좋아요 취소
 router.get('/dislike/:_id', function(req, res, next) {
   const _suggestion = req.params._id;
   const _user = req.user._id;
@@ -127,6 +127,18 @@ router.get('/dislike/:_id', function(req, res, next) {
       res.send({ success: 'failed', msg: e.message });
     });
 });
+
+// 홈페이지로 보내줄 좋아요 순 리스트
+router.get('/listByLike', function(req, res, next) {
+  Suggestion.find().sort( { 'cnt.like': -1 } ).populate('_user', 'name').limit(3)
+  .then(rs => {
+    res.send({ success: true, ds: rs, token: req.token });
+  })
+  .catch(e => {
+    res.send({ success: false });
+  });
+})
+
 
 
 router.all('*', function(req, res, next) {
