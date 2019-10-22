@@ -10,6 +10,7 @@ import SugDetail from './views/Life/suggestion_detail.vue'
 import Map from './views/Life/map.vue'
 // operate
 import Letter from './views/Operate/letter.vue'
+import Comeback from './views/Operate/comeback.vue'
 // manage
 import User from './views/Manage/user.vue'
 import Page from './views/Manage/page.vue'
@@ -104,6 +105,12 @@ export default new Router({
       path: '/letter',
       name: '마음의 편지함',
       component: Letter,
+      beforeEnter: pageCheck
+    },
+    {
+      path: '/comeback',
+      name: '위치기반 복귀체계',
+      component: Comeback,
       beforeEnter: pageCheck
     },
     {

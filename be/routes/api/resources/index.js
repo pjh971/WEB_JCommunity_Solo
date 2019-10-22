@@ -5,11 +5,14 @@ var router = express.Router();
 /* 권한 없이 접근 가능 */
 router.use('/pages', require('./pages'))
 
-// /* 권한에 따른 접근 허용(2이상은 접근불가) */
-// router.all('*', (req, res, next) => {
-//   if (req.user.lv > 2) return next(createError(403, '로그인 후 이용하세요'))
-//   next()
-// })
+/* 권한에 따른 접근 허용(2이상은 접근불가) */
+router.all('*', (req, res, next) => {
+  if (req.user.lv > 2) return next(createError(403, '로그인 후 이용하세요'))
+  next()
+})
+
+router.use('/comments', require('./comments'))
+router.use('/suggestions', require('./suggestions'))
 
 /* 페이지 없을 시 */
 router.all('*', function(req, res, next) {

@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'suggestion',
   data () {
@@ -76,16 +77,7 @@ export default {
       },
       updateMode: false,
       search: '',
-      articles: [
-        {
-          'title': 'asdf',
-          '_user.name': '관리자',
-          'cnt.view': 1,
-          'cnt.like': 1,
-          '_id': '5dac64972d58f40cae98894d'
-        }
-
-      ],
+      articles: [],
       headers: [
         { text: '제목', value: 'title', sortable: true },
         { text: '글쓴이', value: '_user.name', width: 150, sortable: false },
@@ -96,10 +88,13 @@ export default {
       loading: false
     }
   },
+  created () {
+    this.getSuggestions()
+  },
   methods: {
     rowClick (item) {
       this.$router.push({
-        path: `/suggestion/detail/1`
+        path: `/suggestion/detail/${item._id}`
       })
     },
     mdUp () {
@@ -108,12 +103,33 @@ export default {
       this.form.title = ''
       this.form.context = ''
     },
+    getSuggestions () {
+      if (this.loading) return
+      this.loading = true
+      axios.get('resources/suggestions/list')
+        .then(({ data }) => {
+          this.articles = data.ds
+          this.loading = false
+        })
+        .catch((e) => {
+          if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'error' })
+          this.loading = false
+        })
+    },
     id2date (_id) {
       if (!_id) return '잘못된 시간 정보'
       return new Date(parseInt(_id.substring(0, 8), 16) * 1000).toLocaleString()
     },
     postSuggestion () {
       this.dialog = false
+      axios.post('resources/suggestions', this.form)
+        .then((r) => {
+          this.$store.commit('pop', { msg: '건의사항 등록완료', color: 'success' })
+          this.getSuggestions()
+        })
+        .catch((e) => {
+          if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'error' })
+        })
     }
   }
 }
