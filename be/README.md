@@ -88,6 +88,7 @@ GET | /resources/letters/list | 유저의 부대에 해당하는 마음의 편�
 DELETE | /resources/letters/{ _id } | 마음의 편지 삭제 API (lv > 2)
 
 6. **notices**(lv > 3)
+
 Method | Url | Detail
 ---- | ---- | ----
 GET | /resources/suggestions/one/{ id } | params id에 해당하는 공지사항을 반환한다. 
