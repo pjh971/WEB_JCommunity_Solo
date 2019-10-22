@@ -1,7 +1,9 @@
 <template>
-  <v-app :dark="siteDark" id="inspire">
+  <v-app :dark="siteDark" id="inspire" style="
+    background: #616161">
     <v-navigation-drawer
       v-model="drawer"
+      src="@/assets/wide_background.jpg"
       clipped
       :mini-variant.sync="mini"
       :dark="siteDark"
@@ -66,6 +68,7 @@
     </v-navigation-drawer>
     <v-app-bar
       app
+      src="@/assets/wide_background.jpg"
       :dark="siteDark"
       clipped-left
     >
@@ -83,8 +86,8 @@
       </v-btn>
     </v-app-bar>
 
-    <v-content>
-      <router-view/>
+    <v-content color="light-green darken-2">
+      <router-view />
     </v-content>
 
     <v-footer

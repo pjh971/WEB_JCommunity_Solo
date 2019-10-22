@@ -1,4 +1,4 @@
-# J_community
+# JCommunity
 
 중대숲
 ### 기술 스택
@@ -17,7 +17,6 @@
 
 ---
 ### 1일차 구현 사항
-
 ##### < 1. 회원가입, 로그인, 권한별 페이지 접근 기능 구축>
 -  회원가입 및 로그인 페이지 생성
 - **vee-validate** 모듈 사용으로 회원가입 유효성 검사
@@ -68,8 +67,14 @@ module.exports = {
 ### 2일차 구현 사항
 ##### < 1. 건의사항 기능 추가 >
 - suggestion, suggestionDetail view를 생성, commentCard component화
-- vuetify vue-data-table을 이용한 게시판 구현
+- vuetify, **vue-data-table**을 이용한 게시판 구현(search, pagenation 지원)
 - comment, suggestion model 정의 및 API 구현
+
+- suggestion, comment 모델 생성
+- suggestion, comment API 생성
+
+##### < 2. 부대 정보 프로젝트에 적용>
+- company management page 생성
 
 
 ---

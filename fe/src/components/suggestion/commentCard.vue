@@ -1,7 +1,7 @@
 <template>
   <v-layout wrap row>
     <div class="pa-2">
-      <v-card min-width="300" dark color="grey darken-2">
+      <v-card min-width="300" dark color="lime darken-4">
         <v-card-title>
           <v-avatar class="mr-3" size="28" color="grey darken-3">
             <v-img class="elevation-6" src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
@@ -24,7 +24,7 @@
         </v-card-title>
         <v-divider></v-divider>
         <v-card-text>
-          {{comment.context}}
+          <span class="bold">{{comment.context}}</span>
         </v-card-text>
       </v-card>
     </div>

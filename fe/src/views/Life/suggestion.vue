@@ -4,7 +4,7 @@
       <v-flex xs12 lg12>
         <v-card>
           <v-card-title>
-            건의사항
+            <div class="condensed light">건의사항</div>
             <div class="flex-grow-1"></div>
             <v-text-field
               v-model="search"
@@ -26,13 +26,19 @@
             <template v-slot:item.title="{ item }">
               <div @click="rowClick(item)">{{ item.title }}</div>
             </template>
+            <template v-slot:item.cnt.view="{ item }">
+              <v-chip dark label color="warning">{{ item.cnt.view }}</v-chip>
+            </template>
+            <template v-slot:item.cnt.like="{ item }">
+              <v-chip dark label color="warning">{{ item.cnt.like }}</v-chip>
+            </template>
             <template v-slot:item._id="{ item }">
-              <v-chip>{{ id2date(item._id) }}</v-chip>
+              <v-chip dark label>{{ id2date(item._id) }}</v-chip>
             </template>
           </v-data-table>
         </v-card>
         <div class="text-right">
-          <v-btn class="mt-3" color="green darken-3" dark @click="mdUp">글쓰기</v-btn>
+          <v-btn class="mt-3" color="green darken-1" dark @click="mdUp">글쓰기</v-btn>
         </div>
       </v-flex>
       <v-dialog v-model="dialog" persistent max-width="600px">

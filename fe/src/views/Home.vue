@@ -1,5 +1,5 @@
 <template>
-  <v-container dark fluid :grid-list-md="!$vuetify.breakpoint.xs">
+  <v-container fluid :grid-list-md="!$vuetify.breakpoint.xs">
     <v-layout wrap row  v-if="$store.state.token">
       <v-flex xs12 class="pb-2">
         <v-card
@@ -7,8 +7,8 @@
         >
           <v-img
             class="white--text align-end"
+            src="@/assets/card_background.png"
             height="200px"
-            src="@/assets/wide_background.jpg"
           >
             <v-card-title>로그인 상태</v-card-title>
           </v-img>
