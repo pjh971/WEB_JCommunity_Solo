@@ -4,7 +4,7 @@
       <v-card min-width="300" dark color="lime darken-4">
         <v-card-title>
           <v-avatar class="mr-3" size="28" color="grey darken-3">
-            <v-img class="elevation-6" src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+            <v-img class="elevation-6" src="@/assets/army.png"></v-img>
           </v-avatar>
           <span class="body-1 mr-3">{{comment._user.name}}</span>
           <span class="caption font-weight-light mt-1">{{createdAt}}</span>

@@ -73,3 +73,13 @@ Method | Url | Detail
 ---- | ---- | ----
 GET | /resources/companys/one | req에 담겨있는 유저정보의 company를 DB에서 찾아 반환한다.
 GET | /resources/companys/list | DB에 존재하는 모든 부대정보를 반환한다(회원가입 및 유저정보 수정시에 사용).
+
+5. **letters**
+
+Method | Url | Detail
+---- | ---- | ----
+POST | /resources/letters/ | title, context를 받는다. 마음의 편지 작성 API
+GET | /resources/letters/one/{ _id } | params id에 해당하는 마음의 편지를 반환한다.
+GET | /resources/letters/list | 유저의 부대에 해당하는 마음의 편지 리스트를 반환한다.
+DELETE | /resources/letters/{ _id } | 마음의 편지 삭제 API
+

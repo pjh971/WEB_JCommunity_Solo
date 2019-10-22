@@ -1,10 +1,9 @@
 <template>
   <v-app :dark="siteDark" id="inspire" style="
-    background: #616161">
+    background: #E0E0E0">
     <v-navigation-drawer
       v-model="drawer"
       src="@/assets/wide_background.jpg"
-      clipped
       :mini-variant.sync="mini"
       :dark="siteDark"
       app
@@ -12,7 +11,7 @@
       <v-list>
         <v-list-item link>
           <v-list-item-avatar>
-            <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+            <v-img src="@/assets/army.png"></v-img>
           </v-list-item-avatar>
           <v-list-item-content v-if="!mini">
             <v-list-item-title>사용자</v-list-item-title>
@@ -68,9 +67,7 @@
     </v-navigation-drawer>
     <v-app-bar
       app
-      src="@/assets/wide_background.jpg"
-      :dark="siteDark"
-      clipped-left
+      color="grey lighten-2 elevation-0"
     >
       <v-app-bar-nav-icon @click.stop="max"></v-app-bar-nav-icon>
       <v-toolbar-title @click="$router.push('/')">
@@ -86,16 +83,42 @@
       </v-btn>
     </v-app-bar>
 
-    <v-content color="light-green darken-2">
+    <v-content app>
       <router-view />
+      <v-btn absolute dark fab bottom right color="green darken-4" @click="mdUp">
+        <v-icon>mail</v-icon>
+      </v-btn>
     </v-content>
 
-    <v-footer
-      :dark = "siteDark"
-      app
-    >
-      <span>{{siteCopyright}}</span>
-    </v-footer>
+    <v-footer color="grey lighten-2">jay</v-footer>
+
+    <v-dialog v-model="dialog" persistent max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">마음의 편지</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field label="제목" v-model="form.title" required></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-textarea label="내용" v-model="form.context" required></v-textarea>
+              </v-col>
+            </v-row>
+          </v-container>
+          <small>마음의 편지는 익명으로 전달되나, 부적절한 내용작성 시에 유저정보를 조회할 수 있습니다.</small>
+          <br>
+          <small>또한 수정이 불가하니, 신중히 작성하시기 바랍니다.</small>
+        </v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+          <v-btn color="blue darken-1" text @click="postLetter">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-snackbar
        v-model="$store.state.sb.act"
@@ -113,6 +136,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   props: {
     source: String
@@ -121,9 +145,14 @@ export default {
     drawer: null,
     mini: false,
     siteIcon: 'people',
-    siteTitle: '중대숲',
+    siteTitle: '',
     siteCopyright: '@2019 Jay_kim',
     siteDark: true,
+    dialog: false,
+    form: {
+      title: '',
+      context: ''
+    },
     home: {
       icon: 'home',
       title: '홈',
@@ -209,6 +238,22 @@ export default {
     max () {
       this.mini = false
       this.drawer = !(this.drawer)
+    },
+    mdUp () {
+      this.dialog = true
+      this.updateMode = false
+      this.form.title = ''
+      this.form.context = ''
+    },
+    postLetter () {
+      this.dialog = false
+      axios.post('resources/letters', this.form)
+        .then((r) => {
+          this.$store.commit('pop', { msg: '마음의 편지 작성완료', color: 'success' })
+        })
+        .catch((e) => {
+          if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'error' })
+        })
     }
   }
 }
