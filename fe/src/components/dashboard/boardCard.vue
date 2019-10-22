@@ -4,6 +4,7 @@
   >
     <v-toolbar
       dark
+      src="@/assets/wide_background.jpg"
       :color="tBarColor"
     >
       <v-icon class="mr-3">{{tBarLeftIcon}}</v-icon>
@@ -35,7 +36,7 @@
           :key="item.title"
         >
           <v-list-item-avatar>
-            <v-img :src="item.avatar"></v-img>
+            <v-img src="@/assets/army.png"></v-img>
           </v-list-item-avatar>
 
           <v-list-item-content>
@@ -54,21 +55,18 @@ export default {
     items: [
       { header: 'Today' },
       {
-        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-        title: 'Brunch this weekend?',
-        subtitle: "<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
+        title: '전투휴무를 늘려주십시오',
+        subtitle: '도유승'
       },
       { divider: true, inset: true },
       {
-        avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-        title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-        subtitle: "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
+        title: '근무태만 인원 징계 관련',
+        subtitle: '김장영'
       },
       { divider: true, inset: true },
       {
-        avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
         title: 'Oui oui',
-        subtitle: "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
+        subtitle: '송승하'
       }
     ]
   })

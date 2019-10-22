@@ -1,12 +1,12 @@
 <template>
   <v-layout wrap row>
     <div class="pa-2">
-      <v-card min-width="300" dark color="lime darken-4">
-        <v-card-title>
-          <v-avatar class="mr-3" size="28" color="grey darken-3">
+      <v-card min-width="300">
+      <v-toolbar class="elevation-0" color="grey lighten-1">
+        <v-avatar class="mr-3" size="28" color="grey darken-3">
             <v-img class="elevation-6" src="@/assets/army.png"></v-img>
           </v-avatar>
-          <span class="body-1 mr-3">{{comment._user.name}}</span>
+          <span class="body-1 bold mr-3">{{comment._user.name}}</span>
           <span class="caption font-weight-light mt-1">{{createdAt}}</span>
           <div class="flex-grow-1"></div>
           <v-menu left transition="scale-transition">
@@ -21,10 +21,10 @@
               </v-list-item>
             </v-list>
           </v-menu>
-        </v-card-title>
+        </v-toolbar>
         <v-divider></v-divider>
         <v-card-text>
-          <span class="bold">{{comment.context}}</span>
+          <span class="font-weight-bold">{{comment.context}}</span>
         </v-card-text>
       </v-card>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <v-app :dark="siteDark" id="inspire" style="
-    background: #E0E0E0">
+    background: #EEEEEE">
     <v-navigation-drawer
       v-model="drawer"
       src="@/assets/wide_background.jpg"
@@ -9,12 +9,24 @@
       app
     >
       <v-list>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="title">
+              중대숲
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              military community
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
         <v-list-item link>
           <v-list-item-avatar>
             <v-img src="@/assets/army.png"></v-img>
           </v-list-item-avatar>
           <v-list-item-content v-if="!mini">
-            <v-list-item-title>사용자</v-list-item-title>
+            <v-list-item-title>{{$store.state.user.name}}</v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
             <v-btn icon @click.native.stop="mini = !mini">
@@ -67,7 +79,7 @@
     </v-navigation-drawer>
     <v-app-bar
       app
-      color="grey lighten-2 elevation-0"
+      color="grey lighten-3 elevation-0"
     >
       <v-app-bar-nav-icon @click.stop="max"></v-app-bar-nav-icon>
       <v-toolbar-title @click="$router.push('/')">
@@ -90,7 +102,7 @@
       </v-btn>
     </v-content>
 
-    <v-footer color="grey lighten-2">jay</v-footer>
+    <v-footer color="grey lighten-3">jay</v-footer>
 
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
@@ -144,7 +156,7 @@ export default {
   data: () => ({
     drawer: null,
     mini: false,
-    siteIcon: 'people',
+    siteIcon: 'home',
     siteTitle: '',
     siteCopyright: '@2019 Jay_kim',
     siteDark: true,

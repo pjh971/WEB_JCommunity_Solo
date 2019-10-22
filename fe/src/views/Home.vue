@@ -1,6 +1,6 @@
 <template>
   <v-container dark fluid :grid-list-md="!$vuetify.breakpoint.xs">
-    <v-layout wrap row  v-if="$store.state.token">
+    <v-layout wrap row v-if="$store.state.token">
       <v-flex xs12 class="pb-2">
         <v-card
           dark
@@ -17,7 +17,7 @@
               >
                 <v-col class="text-center" cols="12">
                   <h1 class="display-1 font-weight-thin mb-4">Dashboard</h1>
-                  <h4 class="subheading">전투모의지원중대</h4>
+                  <h4 class="subheading">{{$store.state.user.company}}</h4>
                 </v-col>
               </v-row>
             </v-parallax>
@@ -93,14 +93,14 @@
           <v-flex xs12 sm8>
             <v-parallax
               dark
-              src="@/assets/card_background.png"
+              src="@/assets/wide_background.jpg"
             >
               <v-row
                 align="center"
                 justify="center"
               >
                 <v-col class="text-center">
-                  <h1 class="display-1 font-weight-thin mb-4">Login Please</h1>
+                  <h1 class="display-1 font-weight-thin mb-4">Cannot Access</h1>
                   <h4 class="subheading">중대숲은 로그인 이후에 사용이 가능합니다.</h4>
                   <v-btn large dark color="green darken-4" class="mt-4" @click="$router.push('/sign')">login</v-btn>
                 </v-col>

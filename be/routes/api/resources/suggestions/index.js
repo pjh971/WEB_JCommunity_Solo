@@ -3,12 +3,12 @@ var createError = require('http-errors');
 var router = express.Router();
 const Suggestion = require('../../../../models/suggestions');
 const Comment = require('../../../../models/comments');
-
+const LikeHistorys = require('../../../../models/likeHistorys');
 
 /* Routing Methods */
 router.get('/one/:id', function(req, res, next) {
   const sugId = req.params.id
-  
+
   Suggestion.findOneAndUpdate({ _id: sugId }, { $inc: { "cnt.view": 1 } }, { new: true }).populate('_user', 'name').lean()
     .then(r => {
       if (!r) throw new Error('잘못된 게시물입니다.')
@@ -17,12 +17,16 @@ router.get('/one/:id', function(req, res, next) {
       return Comment.find({ _suggestion: atc._id }).populate('_user', 'id name').sort({ _id: 1}) //.limit(5)
     })
     .then(rs => {
-      if (rs) atc._comments =rs
-      console.log(atc)
-      res.send({ success: true, d: atc, token: req.token})
+      if (rs) atc._comments = rs
+      return LikeHistorys.findOne({ _suggestion: sugId, _user: req.user._id})
+    })
+    .then(r => {
+      console.log(r)
+      if(r) return res.send({ success: true, d: atc, alreadyLike: true, token: req.token})
+      return res.send({ success: true, d: atc, alreadyLike: false, token: req.token})
     })
     .catch(e => {
-      res.send({ success: false });
+      res.send({ success: false, msg: e.message });
     });
 });
 
@@ -85,6 +89,45 @@ router.delete('/:id', function(req, res, next) {
       res.send({ success: 'failed', msg: e.message });
     });
 });
+
+// 좋아요 처리
+router.get('/like/:_id', function(req, res, next) {
+  const _suggestion = req.params._id;
+  const _user = req.user._id;
+  LikeHistorys.create({ _suggestion, _user })
+    .then(r => {
+      if (r) return Suggestion.findOneAndUpdate({ _id: _suggestion }, { $inc: { "cnt.like": 1 } }, { new: true }).select('cnt')
+    })
+    .then(r => {
+      console.log(r)
+      res.send({ success: true, d: r.cnt.like, token: req.token });
+    })
+    .catch(e => {
+      res.send({ success: 'failed', msg: e.message });
+    });
+});
+
+router.get('/dislike/:_id', function(req, res, next) {
+  const _suggestion = req.params._id;
+  const _user = req.user._id;
+  LikeHistorys.findOne({ _suggestion, _user })
+    .then(r => {
+      if (r) {
+        console.log(r)
+        return LikeHistorys.deleteOne(r)
+      }
+    })
+    .then(r => {
+      if (r) return Suggestion.findOneAndUpdate({ _id: _suggestion }, { $inc: { "cnt.like": -1 } }, { new: true }).select('cnt')
+    })
+    .then(r => {
+      res.send({ success: true, d: r.cnt.like, token: req.token });
+    })
+    .catch(e => {
+      res.send({ success: 'failed', msg: e.message });
+    });
+});
+
 
 router.all('*', function(req, res, next) {
   next(createError(404, `${req.path} not found`))

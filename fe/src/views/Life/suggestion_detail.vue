@@ -42,7 +42,12 @@
 
           <v-row align="center" justify="end">
             <v-card-actions>
-              <v-btn icon><v-icon v-html="like_icon" color="green darken-3"></v-icon></v-btn>
+              <div v-if="alreadyLike">
+                <v-btn icon><v-icon v-html="like_icon" color="green darken-3" @click="decLike"></v-icon></v-btn>
+              </div>
+              <div v-else>
+                <v-btn icon><v-icon v-html="like_icon" color="grey" @click="incLike"></v-icon></v-btn>
+              </div>
             </v-card-actions>
             <span class="subheading">{{item.cnt.like}}</span>
           </v-row>
@@ -134,7 +139,8 @@ export default {
       comments: [],
       like_icon: 'favorite',
       more: 'more-vert',
-      dialog: false
+      dialog: false,
+      alreadyLike: false
     }
   },
   created () {
@@ -146,6 +152,7 @@ export default {
         .then((r) => {
           this.item = r.data.d
           this.comments = r.data.d._comments
+          this.alreadyLike = r.data.alreadyLike
           this.form.title = this.item.title
           this.form.context = this.item.context
         })
@@ -184,6 +191,26 @@ export default {
           this.$store.commit('pop', { msg: '댓글 작성완료', color: 'success' })
           this.getSuggestion(this.suggestionId)
           this.cmtForm.context = ''
+        })
+        .catch((e) => {
+          if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'error' })
+        })
+    },
+    incLike () {
+      axios.get(`resources/suggestions/like/${this.suggestionId}`)
+        .then((r) => {
+          this.item.cnt.like = r.data.d
+          this.alreadyLike = true
+        })
+        .catch((e) => {
+          if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'error' })
+        })
+    },
+    decLike () {
+      axios.get(`resources/suggestions/dislike/${this.suggestionId}`)
+        .then((r) => {
+          this.item.cnt.like = r.data.d
+          this.alreadyLike = false
         })
         .catch((e) => {
           if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'error' })

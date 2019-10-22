@@ -10,15 +10,27 @@ export default new Vuex.Store({
       act: false,
       msg: '',
       color: 'error'
+    },
+    user: {
+      name: '비로그인',
+      company: '비로그인'
     }
   },
   mutations: {
-    getToken (state, user) {
+    getToken (state) {
       state.token = localStorage.getItem('token')
+    },
+    setUser (state, user) {
+      state.user.name = user.name
+      state.user.company = user._company.name
     },
     delToken (state) {
       localStorage.removeItem('token')
       state.token = null
+      state.user = {
+        name: '비로그인',
+        company: '비로그인'
+      }
     },
     pop (state, d) {
       state.sb.msg = d.msg

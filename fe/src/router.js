@@ -39,8 +39,12 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (response) {
   // Do something with response data
   const token = response.data.token
+  const user = response.data.user
   // console.log(token)
-  if (token) localStorage.setItem('token', token)
+  if (token) {
+    localStorage.setItem('token', token)
+    store.commit('getToken', user)
+  }
   return response
 }, function (error) {
   console.log(error.response)

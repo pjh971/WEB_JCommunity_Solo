@@ -51,7 +51,8 @@ export default {
             return console.error(r.data.msg)
           }
           localStorage.setItem('token', r.data.token) // 로컬 스토리지에 토큰 저장
-          this.$store.commit('getToken', r.data.user)
+          this.$store.commit('getToken')
+          this.$store.commit('setUser', r.data.user)
           this.$store.commit('pop', { msg: '로그인 성공!!', color: 'success' })
           this.$router.push('/') // 페이지 이동
         })
