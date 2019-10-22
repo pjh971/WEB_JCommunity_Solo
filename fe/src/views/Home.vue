@@ -8,7 +8,7 @@
           <v-img
             class="white--text align-end"
             height="200px"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            src="@/assets/wide_background.jpg"
           >
             <v-card-title>로그인 상태</v-card-title>
           </v-img>
@@ -26,12 +26,13 @@
           <v-img
             class="white--text align-end"
             height="200px"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            src="@/assets/wide_background.jpg"
           >
             <v-card-title>비로그인 상태</v-card-title>
           </v-img>
           <v-card-text class="text--primary">
             <div>로그인해주세요!!</div>
+            <div>비로그인 상태에서는 중대숲을 이용할 수 없습니다</div>
           </v-card-text>
         </v-card>
       </v-flex>

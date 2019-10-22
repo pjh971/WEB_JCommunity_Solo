@@ -7,6 +7,7 @@ router.all('*', (req, res, next) => {
   next()
 })
 
+router.use('/company', require('./company'))
 router.use('/page', require('./page'))
 router.use('/user', require('./user'))
 

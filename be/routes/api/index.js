@@ -10,9 +10,9 @@ const cfg = require('../../../config');
 //토큰 검사 함수
 const verifyToken = t => {
   return new Promise((resolve, reject) => {
-    if (!t) resolve({ id: 'guest', name: '손님', lv: 3});
+    if (!t) resolve({ id: 'guest', name: '손님', lv: 3, _company: null });
     if (typeof t !== 'string') reject(new Error('문자가 아닌 토큰입니다'));
-    if (t.length < 10) resolve({ id: 'guest', name: '손님', lv: 3});
+    if (t.length < 10) resolve({ id: 'guest', name: '손님', lv: 3, _company: null });
     jwt.verify(t, cfg.jwt.secretKey, (err, v) => {
       if (err) reject(err);
       resolve(v);
@@ -20,7 +20,7 @@ const verifyToken = t => {
   });
 };
 
-const signToken = (_id, id, name, lv, exp) => {
+const signToken = (_id, id, name, lv, _company, exp) => {
   return new Promise((resolve, reject) => {
     const o = {
       issuer: cfg.jwt.issuer,
@@ -30,7 +30,7 @@ const signToken = (_id, id, name, lv, exp) => {
       expriesIn: exp
     };
     if (rmb) o.expiresIn = cfg.jwt.expiresInRemember; // 6일
-    jwt.sign({_id, id, name, lv }, cfg.jwt.secretKey, o, (err, token) => {
+    jwt.sign({_id, id, name, lv, _company }, cfg.jwt.secretKey, o, (err, token) => {
       if (err) reject(err);
       resolve(token);
     });
@@ -44,7 +44,7 @@ const getToken = async(t) => {
   console.log(diff)
   const expSec = (vt.exp - vt.iat)
   if (diff > expSec / cfg.jwt.expiresInDiv) return { user: vt, token: null }
-  const nt = await signToken(vt._id, vt.id, vt.name, vt.lv, expSec)
+  const nt = await signToken(vt._id, vt.id, vt.name, vt.lv, vt._company, expSec)
   vt = await verifyToken(nt)
   return { user: vt, token: nt }
 }

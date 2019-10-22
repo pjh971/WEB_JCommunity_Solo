@@ -13,15 +13,15 @@
             <div>
               <div>이름: {{user.name}}</div>
               <div>군번: {{user.number}}</div>
-              <div>부대: 전투모의지원중대</div>
+              <div>부대: {{user._company.name}}</div>
               <div>권한: {{user.lv}}</div>
               <div>로그인 횟수: {{user.inCnt}}</div>
             </div>
           </v-card-text>
           <v-divider light></v-divider>
           <v-card-actions>
-            <v-btn flat color="orange" @click="putDialog(user)">수정</v-btn>
-            <v-btn flat color="error" @click="delUser(user._id)">삭제</v-btn>
+            <v-btn color="orange" @click="putDialog(user)">수정</v-btn>
+            <v-btn color="error" @click="delUser(user._id)">삭제</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -73,8 +73,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click="putUser">수정</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
+          <v-btn color="blue darken-1" @click="putUser">수정</v-btn>
+          <v-btn color="blue darken-1" @click.native="dialog = false">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -85,12 +85,15 @@
 export default {
   data () {
     return {
+      companys: [],
+      comlist: [],
       users: [],
       dialog: false,
       userLvs: [],
       form: {
         name: '',
         number: '',
+        _company: '',
         lv: 0
       },
       putId: ''
@@ -99,11 +102,13 @@ export default {
   mounted () {
     for (let i = 0; i < 4; i++) this.userLvs.push(i)
     this.getUsers()
+    this.getCompanys()
   },
   methods: {
     getUsers () {
       this.$axios.get(`manage/user`)
         .then((r) => {
+          console.log(r)
           this.users = r.data.ds
         })
         .catch((e) => {
@@ -115,10 +120,12 @@ export default {
       this.dialog = true
       this.form.name = user.name
       this.form.number = user.number
+      this.form._company = user._company.name
       this.form.lv = user.lv
     },
     putUser () {
       this.dialog = false
+      this.form._company = this.searchCompanyid(this.form._company, this.companys)
       this.$axios.put(`manage/user/${this.putId}`, this.form)
         .then((r) => {
           this.$store.commit('pop', { msg: '사용자 수정완료', color: 'success' })
@@ -137,6 +144,23 @@ export default {
         .catch((e) => {
           if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'error' })
         })
+    },
+    getCompanys () {
+      this.$axios.get('resources/companys/list')
+        .then((r) => {
+          this.companys = r.data.ds
+          this.comlist = r.data.ds.map((el) => {
+            return el.name
+          })
+        })
+        .catch((e) => {
+          if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'error' })
+        })
+    },
+    searchCompanyid (nameKey, myArray) {
+      for (var i = 0; i < myArray.length; i++) {
+        if (myArray[i].name === nameKey) return myArray[i]
+      }
     }
   }
 }

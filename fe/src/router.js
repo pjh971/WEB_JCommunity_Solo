@@ -13,6 +13,7 @@ import Letter from './views/Operate/letter.vue'
 import Comeback from './views/Operate/comeback.vue'
 // manage
 import User from './views/Manage/user.vue'
+import Company from './views/Manage/company.vue'
 import Page from './views/Manage/page.vue'
 
 Vue.use(Router)
@@ -117,6 +118,12 @@ export default new Router({
       path: '/user',
       name: 'user',
       component: User,
+      beforeEnter: pageCheck
+    },
+    {
+      path: '/company',
+      name: 'company',
+      component: Company,
       beforeEnter: pageCheck
     },
     {

@@ -4,6 +4,7 @@ var router = express.Router();
 
 /* 권한 없이 접근 가능 */
 router.use('/pages', require('./pages'))
+router.use('/companys', require('./companys'))
 
 /* 권한에 따른 접근 허용(2이상은 접근불가) */
 router.all('*', (req, res, next) => {

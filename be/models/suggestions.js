@@ -10,7 +10,8 @@ const suggestionSchema = new mongoose.Schema({
   },
   ip: { type: String, default: '' },
   _comments: [],
-  _user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', index: true }
+  _user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', index: true },
+  _company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', index: true }
 });
 
 const Suggestion = mongoose.model('Suggestion', suggestionSchema);

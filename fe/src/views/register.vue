@@ -50,6 +50,16 @@
                 data-vv-name="number"
                 required
               ></v-text-field>
+              <v-select
+                prepend-icon="account_balance"
+                v-model="form._company"
+                v-validate="'required'"
+                :items="comlist"
+                :error-messages="errors.collect('company')"
+                label="부대"
+                data-vv-name="company"
+                required
+              ></v-select>
               <v-checkbox
                 v-validate="'required'"
                 v-model="agree"
@@ -90,6 +100,7 @@ export default {
       _company: '',
       number: ''
     },
+    companys: [],
     comlist: [],
     agree: null,
     dictionary: {
@@ -99,14 +110,26 @@ export default {
         pwd: '비밀번호 ',
         name: '이름 ',
         number: '군번 ',
+        company: '부대 ',
         agree: '약관동의'
         // custom attributes
+      },
+      custom: {
+        // name: {
+        //   required: () => 'Name can not be empty',
+        //   max: 'The name field may not be greater than 10 characters'
+        //   // custom messages
+        // },
+        // select: {
+        //   required: 'Select field is required'
+        // }
       }
     }
   }),
 
   mounted () {
     this.$validator.localize('ko', this.dictionary)
+    this.getCompanys()
   },
 
   methods: {
@@ -114,6 +137,7 @@ export default {
       this.$validator.validateAll()
         .then(r => {
           if (!r) throw new Error('모두 기입해주세요')
+          this.form._company = this.searchCompanyid(this.form._company, this.companys)
           return this.$axios.post('register', this.form)
         })
         .then(r => {
@@ -125,12 +149,29 @@ export default {
           if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'warning' })
         })
     },
+    getCompanys () {
+      this.$axios.get('resources/companys/list')
+        .then((r) => {
+          this.companys = r.data.ds
+          this.comlist = r.data.ds.map((el) => {
+            return el.name
+          })
+        })
+        .catch((e) => {
+          if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'warning' })
+        })
+    },
     clear () {
       this.form.id = ''
       this.form.pwd = ''
       this.form.name = ''
       this.agree = null
       this.$validator.reset()
+    },
+    searchCompanyid (nameKey, myArray) {
+      for (var i = 0; i < myArray.length; i++) {
+        if (myArray[i].name === nameKey) return myArray[i]
+      }
     }
   }
 }

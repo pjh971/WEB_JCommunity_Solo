@@ -181,6 +181,13 @@ export default {
             }
           },
           {
+            icon: 'info',
+            title: '부대관리',
+            to: {
+              path: '/company'
+            }
+          },
+          {
             icon: 'bookmarks',
             title: '페이지관리',
             to: {

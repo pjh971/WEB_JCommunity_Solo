@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 const cfg = require('../../config');
+const Company = require('./companys');
 
 mongoose.set('useCreateIndex', true);
 
@@ -10,12 +11,23 @@ const userSchema = new mongoose.Schema({
   name: { type: String, default: '' },
   number: { type: String, default: '' },
   lv: { type: Number, default: 2 },
-  inCnt: { type: Number, default: 0 }
+  inCnt: { type: Number, default: 0 },
+  _company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', index: true }
 });
 
 const User = mongoose.model('User', userSchema);
 
 // User.collection.dropIndexes('id_1')
+const com = null
+
+Company.findOne({ name: cfg.company.name}) //company 찾아오는 구문
+  .then((r) => {
+    this.com = r._id
+    console.log(this.com)
+  })
+  .catch((e) => {
+    console.error(e.message);
+  })
 
 User.findOne({ id: cfg.admin.id }) // admin계정이 없을 경우 생성하는 구문, 있으면 생성 X
   .then(r => {
@@ -25,6 +37,7 @@ User.findOne({ id: cfg.admin.id }) // admin계정이 없을 경우 생성하는 
         pwd: cfg.admin.pwd,
         name: cfg.admin.name,
         number: cfg.admin.number,
+        _company: this.com,
         lv: 0
       });
     return Promise.resolve(null);
