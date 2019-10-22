@@ -5,6 +5,8 @@ import store from './store'
 // view pages
 import Home from './views/Home.vue'
 // life
+import Notice from './views/Life/notice.vue'
+import NoticeDetail from './views/Life/notice_detail.vue'
 import Suggestion from './views/Life/suggestion.vue'
 import SugDetail from './views/Life/suggestion_detail.vue'
 import Map from './views/Life/map.vue'
@@ -95,6 +97,17 @@ export default new Router({
       name: '복귀체계',
       component: Map,
       beforeEnter: pageCheck
+    },
+    {
+      path: '/notice',
+      name: '공지사항',
+      component: Notice,
+      beforeEnter: pageCheck
+    },
+    {
+      path: '/notice/detail/:noticeId',
+      name: '공지사항 상세',
+      component: NoticeDetail
     },
     {
       path: '/suggestion',

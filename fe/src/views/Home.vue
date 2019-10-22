@@ -73,9 +73,15 @@
       <v-flex xs12 sm6 class="pb-2">
         <board-card
           title="공지사항"
+          header="최신순"
+          :items="noticeByDay"
           tBarLeftIcon="notifications"
           tBarColor="green darken-4"
           tBarRightIcon="more_horiz"
+          tBarRightIconUrl="notice"
+          itemUrl="notice"
+          chipColor="warning"
+          chipMsg="NEW"
         ></board-card>
       </v-flex>
       <v-flex xs12 sm6 class="pb-2">
@@ -87,6 +93,9 @@
           tBarColor="green darken-4"
           tBarRightIcon="more_horiz"
           tBarRightIconUrl="suggestion"
+          itemUrl="suggestion"
+          chipColor="error"
+          chipMsg="HOT"
         ></board-card>
       </v-flex>
     </v-layout>
@@ -122,11 +131,13 @@ export default {
   },
   data () {
     return {
-      sugByLike: []
+      sugByLike: [],
+      noticeByDay: []
     }
   },
   mounted () {
     this.getSuggestions()
+    this.getNotices()
   },
   methods: {
     getSuggestions () {
@@ -134,6 +145,15 @@ export default {
         .then(r => {
           this.sugByLike = r.data.ds
           console.log(r.data.ds)
+        })
+        .catch((e) => {
+          if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'warning' })
+        })
+    },
+    getNotices () {
+      axios.get('resources/notices/listByDay')
+        .then(r => {
+          this.noticeByDay = r.data.ds
         })
         .catch((e) => {
           if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'warning' })

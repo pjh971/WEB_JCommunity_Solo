@@ -15,6 +15,7 @@ router.all('*', (req, res, next) => {
 router.use('/comments', require('./comments'))
 router.use('/suggestions', require('./suggestions'))
 router.use('/letters', require('./letters'))
+router.use('/notices', require('./notices'))
 
 /* 페이지 없을 시 */
 router.all('*', function(req, res, next) {

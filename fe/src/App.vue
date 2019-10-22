@@ -178,6 +178,13 @@ export default {
         title: 'Life',
         subItems: [
           {
+            icon: 'notifications',
+            title: '공지사항',
+            to: {
+              path: '/notice'
+            }
+          },
+          {
             icon: 'chat',
             title: '건의사항',
             to: {
