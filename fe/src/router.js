@@ -6,6 +6,7 @@ import store from './store'
 import Home from './views/Home.vue'
 // life
 import Suggestion from './views/Life/suggestion.vue'
+import SugDetail from './views/Life/suggestion_detail.vue'
 import Map from './views/Life/map.vue'
 // operate
 import Letter from './views/Operate/letter.vue'
@@ -93,6 +94,11 @@ export default new Router({
       name: '건의사항',
       component: Suggestion,
       beforeEnter: pageCheck
+    },
+    {
+      path: '/suggestion/detail/:suggestionId',
+      name: '건의사항 상세',
+      component: SugDetail
     },
     {
       path: '/letter',
