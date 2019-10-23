@@ -16,7 +16,7 @@ router.get('/one/:_id', function(req, res, next) {
 });
 
 router.get('/list', function(req, res, next) {
-  Notice.find().select('title cnt')
+  Notice.find({ _company: req.user._company._id }).select('title cnt')
     .then(rs => {
       res.send({ success: true, ds: rs, token: req.token });
     })
@@ -27,7 +27,7 @@ router.get('/list', function(req, res, next) {
 
 // 홈페이지로 보내줄 좋아요 순 리스트
 router.get('/listByDay', function(req, res, next) {
-  Notice.find().sort( { '_id': -1 } ).populate('_user', 'name').limit(3)
+  Notice.find({ _company: req.user._company._id }).sort( { '_id': -1 } ).populate('_user', 'name').limit(3)
   .then(rs => {
     res.send({ success: true, ds: rs, token: req.token });
   })
@@ -45,8 +45,9 @@ router.all('*', (req, res, next) => {
 router.post('/', function(req, res, next) {
   const { title, context } = req.body;
   const _user = req.user._id;
+  const _company = req.user._company._id
 
-  Notice.create({ title, context, _user })
+  Notice.create({ title, context, _user, _company })
     .then(r => {
       res.send({ success: true, msg: r, token: req.token });
     })

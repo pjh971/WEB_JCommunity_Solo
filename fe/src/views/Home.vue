@@ -25,6 +25,28 @@
       </v-flex>
       <v-flex xs12 sm6 md3 class="pb-2">
         <small-card
+          title="전체 중대원"
+          number="98"
+          tIcon="person"
+          tIconColor="primary"
+          bIcon="group"
+          bIconColor="success"
+          bText="2명 접속중"
+        ></small-card>
+      </v-flex>
+      <v-flex xs12 sm6 md3 class="pb-2">
+        <small-card
+          title="출타자 현황"
+          number="22"
+          tIcon="visibility"
+          tIconColor="info"
+          bIcon="trending_down"
+          bIconColor="error"
+          bText="2 감소"
+        ></small-card>
+      </v-flex>
+      <v-flex xs12 sm6 md3 class="pb-2">
+        <small-card
           title="최근 건의사항"
           number="10"
           tIcon="list"
@@ -36,32 +58,8 @@
       </v-flex>
       <v-flex xs12 sm6 md3 class="pb-2">
         <small-card
-          title="전체 중대원"
-          number="98"
-          tIcon="person"
-          tIconColor="primary"
-          bIcon="group"
-          bIconColor="success"
-          bText="2명 접속중"
-        ></small-card>
-      </v-flex>
-
-      <v-flex xs12 sm6 md3 class="pb-2">
-        <small-card
-          title="전체 조회수"
-          number="431"
-          tIcon="visibility"
-          tIconColor="info"
-          bIcon="trending_down"
-          bIconColor="error"
-          bText="43 감소"
-        ></small-card>
-      </v-flex>
-
-      <v-flex xs12 sm6 md3 class="pb-2">
-        <small-card
           title="전체 게시물"
-          number="334234"
+          number="405"
           tIcon="view_module"
           tIconColor="warning"
           bIcon="trending_up"

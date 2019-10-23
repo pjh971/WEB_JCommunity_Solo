@@ -35,7 +35,7 @@ router.get('/one/:_id', function(req, res, next) {
 });
 
 router.get('/list', (req, res, next) => {
-  const _company = req.user._company;
+  const _company = req.user._company._id;
   Letters.find({ _company }).select('-_user')
     .then(rs => {
       res.send({ success: true, ds: rs, token: req.token });

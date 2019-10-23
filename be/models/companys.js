@@ -4,7 +4,16 @@ const cfg = require('../../config');
 
 const comSchema = new mongoose.Schema({
 	name: { type: String, default: '', unique: true},
-	phoneNumber: { type: String, default: ''},
+  phoneNumber: { type: String, default: ''},
+  explain: { type: String, default: ''},
+  loc: {
+    latlng:{
+      latitude: { type: Number, default: 0},
+      longitude: { type: Number, default: 0},
+    },
+    region: { type: String, default: ''},
+    address: { type: String, default: ''}
+  }
 });
 
 const Company = mongoose.model('Company', comSchema);

@@ -193,7 +193,7 @@ export default {
           },
           {
             icon: 'my_location',
-            title: 'GPS 기반 보고체계',
+            title: '복귀보고체계',
             to: {
               path: '/map'
             }

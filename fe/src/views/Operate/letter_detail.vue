@@ -66,7 +66,7 @@ export default {
     delLetter (id) {
       axios.delete(`resources/letters/${id}`)
         .then((r) => {
-          this.$store.commit('pop', { msg: '마음의 편지', color: 'success' })
+          this.$store.commit('pop', { msg: '마음의 편지 삭제완료', color: 'success' })
           this.$router.push({
             path: '/letter'
           })

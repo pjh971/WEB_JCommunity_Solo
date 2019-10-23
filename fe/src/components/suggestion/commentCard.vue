@@ -1,8 +1,8 @@
 <template>
   <v-layout wrap row>
     <div class="pa-2">
-      <v-card min-width="300">
-      <v-toolbar class="elevation-0" color="grey lighten-1">
+      <v-card dark>
+      <v-toolbar class="elevation-0" >
         <v-avatar class="mr-3" size="28" color="grey darken-3">
             <v-img class="elevation-6" src="@/assets/army.png"></v-img>
           </v-avatar>

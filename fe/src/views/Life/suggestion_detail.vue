@@ -72,7 +72,7 @@
             아직 댓글이 없습니다
         </v-alert>
       </v-flex>
-      <v-flex class="pa-3" v-for="item in comments" :key="item">
+      <v-flex xs12 sm10 lg8 class="pa-3" v-for="item in comments" :key="item">
         <comment-card
           :comment="item"
           :createdAt="id2date(item._id)"

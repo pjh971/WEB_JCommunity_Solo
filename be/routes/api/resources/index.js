@@ -12,6 +12,7 @@ router.all('*', (req, res, next) => {
   next()
 })
 
+router.use('/comebacks', require('./comebacks'))
 router.use('/comments', require('./comments'))
 router.use('/suggestions', require('./suggestions'))
 router.use('/letters', require('./letters'))
