@@ -4,7 +4,7 @@
       <v-flex xs12>
         <v-card>
           <v-card-title>
-            복귀보고체계
+            중대원 복귀 현황
           </v-card-title>
           <v-card-text>
             <div>오늘 복귀인원: 12</div>

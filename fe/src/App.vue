@@ -197,6 +197,13 @@ export default {
             to: {
               path: '/map'
             }
+          },
+          {
+            icon: 'directions_bus',
+            title: '중대원 복귀현황',
+            to: {
+              path: '/comeback'
+            }
           }
         ]
       },
@@ -209,13 +216,6 @@ export default {
             title: '마음의 편지함',
             to: {
               path: '/letter'
-            }
-          },
-          {
-            icon: 'directions_bus',
-            title: '중대원 복귀현황',
-            to: {
-              path: '/comeback'
             }
           }
         ]

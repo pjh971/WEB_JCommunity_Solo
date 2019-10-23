@@ -1,53 +1,87 @@
 <template>
   <v-container grid-list-md>
     <v-layout row wrap>
-      <v-flex xs12 sm6 md6 lg6>
-        <v-card>
+      <v-flex xs12>
+        <v-card dark color="grey">
           <v-toolbar class="elevation-0 pr-3" dark src="@/assets/wide_background.jpg">
             <div class="title">위치기반 복귀보고체계</div>
           </v-toolbar>
-          <v-card-text>
-            <v-subheader>map</v-subheader>
-            <v-card xs12>
-              <vue-daum-map
-                :appKey="mapInfo.appKey"
-                :center.sync="mapInfo.center"
-                :level.sync="mapInfo.level"
-                :mapTypeId="mapInfo.mapTypeId"
-                :libraries="mapInfo.libraries"
-                @load="onLoad"
-                @click="moveMarker"
-                style="width:100%;height:500px"/>
-            </v-card>
-          </v-card-text>
-          <v-row class="mt-5" style="width:100%">
-            <v-text-field
-              v-model="keyWord"
-              label="현재 위치를 키워드로 검색해보세요!"
-              outlined
-              clearable
-              style="margin-left:30px;margin-right:20px;width:65%"
-            ></v-text-field>
-            <v-btn x-large outlined color="dark" @click="searchPlace"><v-icon>search</v-icon></v-btn>
-          </v-row>
-          <v-card-text>지역(읍면동): {{myMarker.loc.region}}</v-card-text>
-          <v-card-text>세부 주소: {{myMarker.loc.address}}</v-card-text>
+          <v-layout wrap row>
+            <v-flex xs12 lg6 class="pa-4">
+              <v-card xs12 color="grey darken-2">
+                <v-subheader>map</v-subheader>
+                <vue-daum-map
+                  :appKey="mapInfo.appKey"
+                  :center.sync="mapInfo.center"
+                  :level.sync="mapInfo.level"
+                  :mapTypeId="mapInfo.mapTypeId"
+                  :libraries="mapInfo.libraries"
+                  @load="onLoad"
+                  @click="moveMarker"
+                  style="width:100%;height:680px"/>
+              </v-card>
+            </v-flex>
+            <v-flex xs12 lg6 class="pa-4">
+              <v-card color="grey darken-2">
+                <v-card-text v-if="!notComeback">
+                  <div v-if="comebackInfo.currentType > 2" class="ml-3">
+                    <v-btn disabled>복귀완료</v-btn>
+                  </div>
+                  <div v-else>
+                    <v-btn dark class="elevation-1 ml-3" color="grey" @click="postComeback">
+                      <span class="body-1 mr-1">{{comebackInfo.currentType + 1}}번째 보고 하기</span>
+                      <v-icon>where_to_vote</v-icon>
+                    </v-btn>
+                  </div>
+                </v-card-text>
+                <v-card-text v-else>
+                  <v-btn dark class="elevation-1 ml-3" color="grey" @click="postComeback">
+                    <span class="body-1 mr-1">1번째 보고 하기</span>
+                    <v-icon>where_to_vote</v-icon>
+                  </v-btn>
+                </v-card-text>
+                <v-card-text v-if="!notComeback">
+                  <v-flex xs12 class="pa-2" v-if="comebackInfo.firstLoc.region">
+                    <comeback-card
+                      title="First"
+                      :loc="comebackInfo.firstLoc"
+                    ></comeback-card>
+                  </v-flex>
+                  <v-flex xs12 class="pa-2" v-if="comebackInfo.secondLoc.region">
+                    <comeback-card
+                      title="Second"
+                      :loc="comebackInfo.secondLoc"
+                    ></comeback-card>
+                  </v-flex>
+                  <v-flex xs12 class="pa-2" v-if="comebackInfo.thirdLoc.region">
+                    <comeback-card
+                      title="Third"
+                      :loc="comebackInfo.thirdLoc"
+                    ></comeback-card>
+                  </v-flex>
+                </v-card-text>
+                <v-card-text v-else>
+                  <v-alert type="warning">아직 복귀를 시작하지 않았습니다</v-alert>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+          </v-layout>
         </v-card>
       </v-flex>
-      <v-flex xs12 sm6 md6 lg6>
-        <v-card>
-          <v-toolbar class="elevation-0 pr-3" dark src="@/assets/wide_background.jpg">
-            <div class="title">복귀 보고</div>
-          </v-toolbar>
+      <v-flex xs12 lg6 class="pa-4">
+        <v-card xs12>
+          <v-subheader>복귀보고</v-subheader>
+          <v-text-field
+            v-model="keyWord"
+            label="현재 위치를 키워드로 검색해보세요!"
+            outlined
+            appendIcon="search"
+            class="pa-2"
+            clearable
+          ></v-text-field>
           <v-card-text>
-            <div>복귀는 신중히</div>
-            <v-btn @click="postComeback">전송</v-btn>
-          </v-card-text>
-          <v-card-text>
-            {{notComebackMsg}}
-          </v-card-text>
-          <v-card-text>
-            {{comebackInfo}}
+            <div class="caption mb-2"><v-chip small class="mr-2">지역(시/군/구)</v-chip> {{myMarker.loc.region}}</div>
+            <div class="caption"><v-chip small class="mr-2">세부 주소</v-chip> {{myMarker.loc.address}}</div>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -74,8 +108,9 @@
 import VueDaumMap from 'vue-daum-map'
 import moment from 'moment'
 import axios from 'axios'
+import comebackCard from '@/components/map/comebackCard'
 export default {
-  components: { VueDaumMap },
+  components: { VueDaumMap, comebackCard },
   data () {
     return {
       map: null, // 지도 객체. 지도가 로드되면 할당됨.
@@ -102,7 +137,7 @@ export default {
         }
       },
       keyWord: null, // 검색 area에 바인딩될 keyword
-      notComebackMsg: '',
+      notComeback: true,
       comebackInfo: {}
     }
   },
@@ -196,9 +231,9 @@ export default {
     getComeback () {
       axios.get('resources/comebacks/one')
         .then((r) => {
-          if (!r.data.success) this.notComebackMsg = r.data.msg
+          if (!r.data.success) this.notComeback = true
           else {
-            this.notComebackMsg = ''
+            this.notComeback = false
             this.comebackInfo = r.data.d
           }
         })
