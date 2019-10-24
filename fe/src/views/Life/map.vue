@@ -2,14 +2,29 @@
   <v-container grid-list-md>
     <v-layout row wrap>
       <v-flex xs12>
-        <v-card dark color="grey">
-          <v-toolbar class="elevation-0 pr-3" dark src="@/assets/wide_background.jpg">
-            <div class="title">위치기반 복귀보고체계</div>
-          </v-toolbar>
+        <v-card color="grey lighten-3" class="elevation-0">
+          <v-card-text>
+          </v-card-text>
           <v-layout wrap row>
-            <v-flex xs12 lg6 class="pa-4">
-              <v-card xs12 color="grey darken-2">
-                <v-subheader>map</v-subheader>
+            <v-flex xs12 lg6 class="pa-6">
+              <v-toolbar prominent class="ml-5 mb-n10" style="z-index:2" width="90%" height="80px">
+                <div class="ma-4">
+                  <div class="title font-weight-thin">Map<v-chip class="ml-5">{{myMarker.loc.region}}</v-chip></div>
+                </div>
+                <v-spacer></v-spacer>
+                <div class="mt-4">
+                  <div v-if="comebackInfo.currentType > 2" class="ml-3">
+                    <v-btn disabled>복귀완료</v-btn>
+                  </div>
+                  <div v-else>
+                    <v-btn dark class="elevation-1 ml-3" color="grey" @click="postComeback">
+                      <span class="body-1 mr-1">보고</span>
+                      <v-icon>where_to_vote</v-icon>
+                    </v-btn>
+                  </div>
+                </div>
+              </v-toolbar>
+              <v-card xs12 color="grey lighten-2">
                 <vue-daum-map
                   :appKey="mapInfo.appKey"
                   :center.sync="mapInfo.center"
@@ -18,28 +33,21 @@
                   :libraries="mapInfo.libraries"
                   @load="onLoad"
                   @click="moveMarker"
-                  style="width:100%;height:680px"/>
+                  style="width:100%;height:680px;z-index:1">
+                </vue-daum-map>
               </v-card>
             </v-flex>
-            <v-flex xs12 lg6 class="pa-4">
-              <v-card color="grey darken-2">
-                <v-card-text v-if="!notComeback">
-                  <div v-if="comebackInfo.currentType > 2" class="ml-3">
-                    <v-btn disabled>복귀완료</v-btn>
-                  </div>
-                  <div v-else>
-                    <v-btn dark class="elevation-1 ml-3" color="grey" @click="postComeback">
-                      <span class="body-1 mr-1">{{comebackInfo.currentType + 1}}번째 보고 하기</span>
-                      <v-icon>where_to_vote</v-icon>
-                    </v-btn>
-                  </div>
-                </v-card-text>
-                <v-card-text v-else>
-                  <v-btn dark class="elevation-1 ml-3" color="grey" @click="postComeback">
-                    <span class="body-1 mr-1">1번째 보고 하기</span>
-                    <v-icon>where_to_vote</v-icon>
-                  </v-btn>
-                </v-card-text>
+            <v-flex xs12 lg6 class="pa-6">
+              <v-card class="elevation-0" color="grey lighten-3">
+                <v-card-title class="px-6" width="100">
+                  <v-text-field
+                      v-model="keyWord"
+                      label="현재 위치를 키워드로 검색해보세요!"
+                      outlined
+                      appendIcon="search"
+                      dense
+                  ></v-text-field>
+                </v-card-title>
                 <v-card-text v-if="!notComeback">
                   <v-flex xs12 class="pa-2" v-if="comebackInfo.firstLoc.region">
                     <comeback-card
@@ -66,23 +74,6 @@
               </v-card>
             </v-flex>
           </v-layout>
-        </v-card>
-      </v-flex>
-      <v-flex xs12 lg6 class="pa-4">
-        <v-card xs12>
-          <v-subheader>복귀보고</v-subheader>
-          <v-text-field
-            v-model="keyWord"
-            label="현재 위치를 키워드로 검색해보세요!"
-            outlined
-            appendIcon="search"
-            class="pa-2"
-            clearable
-          ></v-text-field>
-          <v-card-text>
-            <div class="caption mb-2"><v-chip small class="mr-2">지역(시/군/구)</v-chip> {{myMarker.loc.region}}</div>
-            <div class="caption"><v-chip small class="mr-2">세부 주소</v-chip> {{myMarker.loc.address}}</div>
-          </v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
@@ -136,6 +127,7 @@ export default {
           address: '기본위치'
         }
       },
+      markers: [],
       keyWord: null, // 검색 area에 바인딩될 keyword
       notComeback: true,
       comebackInfo: {}
@@ -143,6 +135,13 @@ export default {
   },
   mounted () {
     this.getComeback()
+  },
+  watch: {
+    keyWord: {
+      handler() {
+        this.delay()
+      }
+    }
   },
   methods: {
     // 지도가 로드 완료되면 load 이벤트 발생, 초기화 작업
@@ -162,8 +161,8 @@ export default {
       this.myMarker.obj.setMap(this.map)
       // ps init
       this.mapEl.ps = new kakao.maps.services.Places()
-      // infowindow init
       this.mapEl.infowindow = new kakao.maps.InfoWindow({ zIndex: 1 })
+      this.mapEl.infowindow.setContent('lovv')
     },
     moveMarker (mouseEvent) { // 마커를 움직이는 메소드
       const latLng = mouseEvent[0].latLng
@@ -207,10 +206,18 @@ export default {
         map: this.map,
         position: new kakao.maps.LatLng(place.y, place.x)
       })
+      this.markers.push(marker)
       kakao.maps.event.addListener(marker, 'click', () => {
-        this.mapEl.infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>')
+        // var content = '<div style="padding:5px;z-index:1;">' + place.place_name + '</div>'
+        // this.mapEl.infowindow.setContent(content)
         this.mapEl.infowindow.open(this.map, marker)
       })
+    },
+    removeMarker() {
+      for ( var i = 0; i < this.markers.length; i++ ) {
+        this.markers[i].setMap(null);
+      }
+      this.markers = [];
     },
     // API관련 메소드
     postComeback () {
@@ -240,6 +247,13 @@ export default {
         .catch((e) => {
           if (!e.response) this.$store.commit('pop', { msg: e.message, color: 'error' })
         })
+    },
+    delay () {
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        this.removeMarker()
+        this.searchPlace()
+      }, 1000)
     }
   }
 }

@@ -72,14 +72,15 @@
             아직 댓글이 없습니다
         </v-alert>
       </v-flex>
-      <v-flex xs12 sm10 lg8 class="pa-3" v-for="item in comments" :key="item">
-        <comment-card
-          :comment="item"
-          :createdAt="id2date(item._id)"
-          @del="getSuggestion(suggestionId)"
-        ></comment-card>
-      </v-flex>
-
+      <v-card-text>
+        <v-flex class="pa-3" v-for="item in comments" :key="item">
+          <comment-card
+            :comment="item"
+            :createdAt="id2date(item._id)"
+            @del="getSuggestion(suggestionId)"
+          ></comment-card>
+        </v-flex>
+      </v-card-text>
       <v-divider></v-divider>
       <v-layout wrap row class="pa-5">
         <v-flex sm10>

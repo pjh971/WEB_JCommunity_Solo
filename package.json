@@ -2,9 +2,10 @@
   "name": "J_community",
   "version": "0.0.1",
   "scripts": {
-    "dev": "export NODE_ENV=development && cd be && nodemon",
+    "dev": "cd be && node bin/www",
     "serve": "cd fe && yarn serve",
-    "pr": "NODE_ENV=production PORT=80 node ./be/bin/www"
+    "pr": "NODE_ENV=production PORT=80 node ./be/bin/www",
+    "start": "node ./be/bin/www"
   },
   "dependencies": {}
 }

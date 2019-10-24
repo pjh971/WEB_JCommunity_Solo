@@ -1,6 +1,10 @@
 <template>
-  <v-card>
-    <v-card-title><span class="body-2 font-weight-bold">{{title}}</span></v-card-title>
+  <v-card dark>
+    <v-card-title>
+      <span class="body-2 font-weight-bold">{{title}}</span>
+      <v-spacer></v-spacer>
+      <v-btn v-if="close" color="grey" @click="c">x</v-btn>
+    </v-card-title>
     <v-card-text>
       <div class="mb-2">
         <v-chip color="green darken-2" class="mr-3">지역(시/군/구)</v-chip>
@@ -19,6 +23,11 @@
 </template>
 <script>
 export default {
-  props: [ 'title','loc' ]
+  props: [ 'title', 'loc', 'close' ],
+  methods: {
+    c () {
+      this.$emit('close')
+    }
+  }
 }
 </script>

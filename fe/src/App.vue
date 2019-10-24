@@ -1,7 +1,7 @@
 <template>
-  <v-app :dark="siteDark" id="inspire" style="
-    background: #EEEEEE">
+  <v-app :dark="siteDark" id="inspire" style="background: #EEEEEE">
     <v-navigation-drawer
+      v-if="$store.state.token"
       v-model="drawer"
       src="@/assets/wide_background.jpg"
       :mini-variant.sync="mini"
@@ -78,6 +78,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar
+      v-if="$store.state.token"
       app
       color="grey lighten-3 elevation-0"
     >
@@ -95,14 +96,16 @@
       </v-btn>
     </v-app-bar>
 
-    <v-content app>
-      <router-view />
-      <v-btn absolute dark fab bottom right color="green darken-4" @click="mdUp">
+    <v-content transition="scroll-y-transition" app>
+      <transition>
+        <router-view />
+      </transition>
+      <v-btn v-if="$store.state.token" absolute dark fab bottom right color="green darken-4" @click="mdUp">
         <v-icon>mail</v-icon>
       </v-btn>
     </v-content>
 
-    <v-footer color="grey lighten-3">jay</v-footer>
+    <v-footer color="grey lighten-3" v-if="$store.state.token">jay</v-footer>
 
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>

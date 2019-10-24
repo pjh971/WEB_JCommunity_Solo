@@ -2,11 +2,12 @@
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md4>
-        <v-card class="elevation-12">
-          <v-toolbar class="elevation-0 pr-3" dark src="@/assets/wide_background.jpg">
-            <v-toolbar-title>로그인</v-toolbar-title>
-            <v-spacer></v-spacer>
-          </v-toolbar>
+        <v-toolbar class="ml-5 mb-n10" style="z-index:1" width="200" height="80px" dark src="@/assets/wide_background.jpg">
+          <v-toolbar-title><div class="ml-3 title font-weight-thin">Login</div></v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-card class="elevation-10">
+          <v-card-text></v-card-text>
           <v-card-text>
             <v-form>
               <v-text-field prepend-icon="person" v-model="form.id" label="아이디" type="text"></v-text-field>

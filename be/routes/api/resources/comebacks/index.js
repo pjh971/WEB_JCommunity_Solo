@@ -59,7 +59,10 @@ router.post('/', function(req, res, next) {
       if (r.currentType === 2) {
         const comlatlng = r._company.loc.latlng
         const currentlatlng = loc.latlng
-        const distance = geolib.getDistance(comlatlng, currentlatlng) 
+        const distance = geolib.getDistance(comlatlng, currentlatlng)
+        console.log(r._company.loc)
+        console.log(loc)
+        console.log(distance)
         if (distance > 1000)
           throw new Error('부대 반경 1km이내에서만 3보고가 가능합니다')
         return Comeback.updateOne({ _id }, { $set: { currentType: 3, thirdLoc: loc } }, { new: true })
