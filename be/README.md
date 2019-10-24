@@ -1,39 +1,49 @@
-### Model
+# 중대숲 Server Document(API, WebServer)
 
----
-### API Document(/api)
+## Model
 
-#### register
+## Middle-Ware
+
+## API (localhost:port/api)
+lv  === req.user.lv
+
+ ### register (/register) [ lv = free ]
+
+ 회원가입 API
 
 Method | Url | Detail
 ---- | ---- | ----
 POST | /register | 회원가입 API. ID/PW/이름/군번/부대/을 받는다.
 
-#### sign
+ ### sign (/sign) [ lv = free ]
+
+ 로그인 API 
 
 Method | Url | Detail
 ---- | ---- | ----
- POST | /sign/in | 로그인 API. JWT 포맷으로 인코딩된 access token과 refresh token을 발급한다. 또한 refresh token의 expire가 얼마 남지 않았다면 refresh token도 새로 만들어서 발급해주며 로그인시 로그인 횟수를 증가시킨다.
+POST | /sign/in | 로그인 API. JWT 포맷으로 인코딩된 access token과 refresh token을 발급한다. 또한 refresh token의 expire가 얼마 남지 않았다면 refresh token도 새로 만들어서 발급해주며 로그인시 로그인 횟수를 증가시킨다.
 
-#### manage(lv = 0만 사용가능)
+ ### manage (/manage) [ lv = 0 ]
 
-1. **user**
+부대, 유저, 페이지 등 민감한 정보들에 대한 CRUD 수행하는 API
+
+   **user** (/manage/user)
 
 Method | Url | Detail
 ---- | ---- | ----
- GET | /manage/user | 유저 정보 리스트를 반환한다.
- PUT | /manage/user/{ _id } | 유저 정보 수정 API.
- DELETE | /manage/user/{ _id } | 유저 정보 삭제 API.
+GET | /manage/user | 유저 정보 리스트를 반환한다.
+PUT | /manage/user/{ _id } | 유저 정보 수정 API.
+DELETE | /manage/user/{ _id } | 유저 정보 삭제 API.
 
-2. **page**
+  **page** (/manage/page)
 
 Method | Url | Detail
 ---- | ---- | ----
 GET | /manage/page | 페이지 정보 배열을 반환한다.
-PUT | /manage/page/{ _id } | 페이지 수정 API.
-DELETE | /manage/page/{ _id } | 페이지 삭제 API.
+PUT | /manage/page/{ _id } | 페이지 모델 수정 API.
+DELETE | /manage/page/{ _id } | 페이지 모델 삭제 API.
 
-2. **company**
+ **company** (/manage/company)
 
 Method | Url | Detail
 ---- | ---- | ----
@@ -42,15 +52,16 @@ POST | /manage/company | 부대 등록 API. 부대이름, 부대번호를 받는
 PUT | /manage/company/{ _id } | 부대 수정 API.
 DELETE | /manage/company/{ _id } | 부대 삭제 API.
 
-#### resources
+### resources (/resources)
+-resource와 관련한 데이터를 처리하는 API
 
-1. **pages** (lv free)
+ **pages** (/resources/pages) [ lv free ]
 
 Method | Url | Detail
 ---- | ---- | ----
 POST | /resources/pages | page url을 받는다. 페이지와 유저의 권한을 비교하여 접근권한 여부를 check. 만약 페이지가 없다면 새로 생성
 
-2. **suggestions**(lv > 3)
+ **suggestions** (/resources/suggestions) [ lv > 3 ]
 
 Method | Url | Detail
 ---- | ---- | ----
@@ -63,22 +74,21 @@ POST | /resources/suggestions/ | 건의사항 작성 API
 PUT | /resources/suggestions/{ id } | 건의사항 수정 API(req에 담겨있는 유저정보를 확인해 본인만 수정가능)
 DELETE | /resources/suggestions/{ id } | 건의사항 삭제 API(req에 담겨있는 유저정보를 확인해 높은 권한도 삭제가능)
 
-
-3. **comments**(lv > 3)
+ **comments** (/resources/comments) [ lv > 2 ]
 
 Method | Url | Detail
 ---- | ---- | ----
 GET | /resources/comments/{ _suggestion } | params id에 해당하는 건의사항의 댓글들을 반환한다.
 DELETE | /resources/comments/{ id } | 댓글 삭제 API
 
-4. **companys**(lv free)
+**companys** (/resources/companys) [ lv  free ]
 
 Method | Url | Detail
 ---- | ---- | ----
 GET | /resources/companys/one | req에 담겨있는 유저정보의 company를 DB에서 찾아 반환한다.
 GET | /resources/companys/list | DB에 존재하는 모든 부대정보를 반환한다(회원가입 및 유저정보 수정시에 사용).
 
-5. **letters**(lv > 3)
+**letters** (/resources/letters) [ lv > 3 ]
 
 Method | Url | Detail
 ---- | ---- | ----
@@ -87,14 +97,15 @@ GET | /resources/letters/one/{ _id } | params id에 해당하는 마음의 편�
 GET | /resources/letters/list | 유저의 부대에 해당하는 마음의 편지 리스트를 반환한다. (lv > 2)
 DELETE | /resources/letters/{ _id } | 마음의 편지 삭제 API (lv > 2)
 
-6. **notices**(lv > 3)
+ **notices** (/resources/notices) [ lv > 3 ]
 
 Method | Url | Detail
 ---- | ---- | ----
-GET | /resources/suggestions/one/{ id } | params id에 해당하는 공지사항을 반환한다. 
-GET | /resources/suggestions/list | 유저의 부대에 해당하는 공지사항 리스트를 반환한다. 
+GET | /resources/suggestions/one/{ id } | params id에 해당하는 공지사항을 반환한다.
+GET | /resources/suggestions/list | 유저의 부대에 해당하는 공지사항 리스트를 반환한다.
 GET | /resources/suggestions/listByDay | 홈페이지에 띄울 id 순으로 정렬된 공지사항 3개를 반환한다.
 POST | /resources/suggestions/ | 공지사항 작성 API(lv > 2)
 PUT | /resources/suggestions/{ id } | 공지사항 수정 API(req에 담겨있는 유저정보를 확인해 본인만 수정가능)(lv > 2)
 DELETE | /resources/suggestions/{ id } | 공지사항 삭제 API(req에 담겨있는 유저정보를 확인해 높은 권한도 삭제가능)(lv > 2)
 
+**combacks** (/resources/comebacks) [ lv > 3 ]
