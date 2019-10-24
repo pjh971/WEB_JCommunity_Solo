@@ -25,7 +25,7 @@ router.get('/list', function(req, res, next) {
   const _company = req.user._company._id
   const today = moment().format('YYYYMMDD')
 
-  Comeback.find({createdDay: today, _company}).populate('_user', 'name')
+  Comeback.find({createdDay: today, _company}).sort( { 'currentType': 1 } ).populate('_user', 'name')
     .then(rs => {
       if (!rs) res.send({ success: false, msg: '복귀 인원 없음'})
       res.send({ success: true, ds: rs, token: req.token });
