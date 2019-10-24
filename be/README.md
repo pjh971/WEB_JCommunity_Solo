@@ -1,6 +1,90 @@
 # 중대숲 Server Document(API, WebServer)
 
 ## Model
+### page
+![page](https://lh3.googleusercontent.com/4tdY1gAOOQctgHzsAOuI-iBphlfVUMSH1Vf6XqJXW2oujRLEQ4qcNAIMJFl8_X2jyYJ09ibsFQQ7=s500)
+
+page 모델
+
+### company & user
+![enter image description here](https://lh3.googleusercontent.com/vmavcVoiQVtw9E5idxls_1sRDRB2YKrp_ikRj3x5JvQAvgCEJFOVrouGcAPikRXEoIHUh93fTTU3=s1000)
+
+company와 user 모델
+- user는 company를 참조
+- company의 loc 객체
+```
+loc: {
+	latlng:{
+		latitude: { type:  Number, default:  0},
+		longitude: { type:  Number, default:  0},
+	},
+	region: { type:  String, default:  ''},
+	address: { type:  String, default:  ''}
+}
+```
+### suggestion
+
+
+![enter image description here](https://lh3.googleusercontent.com/Mn_E0YJiYZCkoS5A6yTdsicO1gYbprDO4UzS0lxJyxWX5L2UqBqfokhhRk_z6TfzdtPShOFh9Vyb=s1000)
+ 
+suggesetion 관련 모델
+- comment는 댓글 모델이다
+- likeHistory는 좋아요를 누른 유저와 해당 게시물을 담고있다.
+- cnt 객체
+```
+cnt: {
+	view: { type:  Number, default:  0 },
+	like: { type:  Number, default:  0 }
+}
+```
+
+### notice & letter
+
+![enter image description here](https://lh3.googleusercontent.com/c_zk6OSd6LpULW953K1RSpMu4t4w5WTDmbDdluF8T4jq7Zlv33k5We1BFssnfT_Dpbka0Wc6sMTv=s1000)
+
+notice와 letter 모델
+
+### comeback
+![enter image description here](https://lh3.googleusercontent.com/qW79vQ3JpNmyfM2KsM_tukd7CKKRCMJyMCGBNglhYp7lvxKBUgL1a2l1rqzDM8tYXMJRLd3FCerD=s500)
+
+comeback 모델
+- firstLoc 객체
+```
+firstLoc: {
+	latlng: {
+		latitude: { type:  Number, default:  0},
+		longitude: { type:  Number, default:  0},
+	},
+	region: { type:  String, default:  ''},
+	address: { type:  String, default:  ''},
+	time: {type:  String, default:  ''}
+}
+```
+- secondLoc 객체
+```
+secondLoc: {
+	latlng: {
+		latitude: { type:  Number, default:  0},
+		longitude: { type:  Number, default:  0},
+	},
+	region: { type:  String, default:  ''},
+	address: { type:  String, default:  ''},
+	time: {type:  String, default:  ''}
+}
+```
+- thirdLoc 객체
+```
+thirdLoc: {
+	latlng: {
+		latitude: { type:  Number, default:  0},
+		longitude: { type:  Number, default:  0},
+	},
+	region: { type:  String, default:  ''},
+	address: { type:  String, default:  ''},
+	time: {type:  String, default:  ''}
+}
+```
+
 
 ## Middle-Ware
 
@@ -109,3 +193,8 @@ PUT | /resources/suggestions/{ id } | 공지사항 수정 API(req에 담겨있�
 DELETE | /resources/suggestions/{ id } | 공지사항 삭제 API(req에 담겨있는 유저정보를 확인해 높은 권한도 삭제가능)(lv > 2)
 
 **combacks** (/resources/comebacks) [ lv > 3 ]
+Method | Url | Detail
+---- | ---- | ----
+GET | /resources/comebacks/one | 유저가 복귀보고체계에 들어왔을 때 오늘, 해당유저, 유저의부대 데이터로 조회한 comeback 결과를 리턴한다. 없으면 복귀를 시작하지 않았다는 메세지를 보낸다
+GET | /resources/comebacks/list | 유저가 중대원 복귀 현황에 들어왔을 때 오늘, 유저의 부대 데이터로 조회한 모든 comeback 결과를 리턴한다. 없으면 복귀 인원이 없다는 메세지를 보낸다. 
+POST | /resources/comebacks | 복귀보고체계에서 보고버튼을 누르게 되면 이 API가 호출된다. 유저가 지도에서 선택한 loc정보를 body로 받는다. 오늘, 해당유저의 comeback 정보를 찾고 없으면 comeback을 생성하여 1보고를 완료한다. 1보고는 조건이 없다. 만약 있다면 해당 comeback의  currentType 1인지 2인지를 구별하여 2보고를 진행할 것인지 3보고를 진행할 것인지를 판단한다. 2보고 시에는 받은 loc정보의 region과 유저 부대의 region이 동일한지를 판단한다. 3보고 시에는 받은 loc정보의 좌표와 유저 부대의 loc정보의 좌표의 거리를 계산하여 1km이내인지를 판단한다. 보고가 적절하지 않다면 보고 조건에 맞지않는다는 메세지를 리턴한다.
