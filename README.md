@@ -5,7 +5,7 @@
 
 중대숲은 **중대 내 소통 플랫폼** 입니다.  
 
-중대숲에선
+중대숲에선 현재
 
 - 아무에게도 들킬 염려가 없는  **마음의 편지** 
 - 댓글과 좋아요를 통해 다른병사들의 피드백을 받아볼 수 있는 **건의사항**    
@@ -64,7 +64,7 @@
  - 중대 갤러리 추가
  - 중대 가이드북 추가
  - 일일 오감사 작성 탭 추가
- - 국방 뉴스 배너 대시보드에 노출
+ - 국방 뉴스 배너를 대시보드에 노출
  
  등등 추진 예정
   
@@ -74,7 +74,7 @@
 
 인트로 페이지이다.
 - 군사시설 접근금지 안내판을 차용하여 디자인되었다.
-- 로그인이 되지 않아 토큰이 없다면 이 페이지가 표시된다.
+- 로그인이 되지 않아 로컬스토리지 토큰이 없다면 이 페이지가 표시된다.
 
 #### 1. 로그인 
 ![로그인](https://lh3.googleusercontent.com/aWwFX2ZdEqfwuRaIf7PaazoG7PzigEabLJJQdsntn35NL8CX7sGGT-Th3m3Wfrwe1ENLxvX4-Xw=s500)
@@ -179,6 +179,46 @@
 - - -
 
 # Document
+## 기술 스택
+ **node.js & express.js (backend):** 웹서버, API서버  
+ **mongoDB:** NoSQL 데이터베이스  
+ **vue.js (frontend):** 화면구성  
+ **vuetify.js (frontend):** 머터리얼 화면구성  
+
+## 구현 세부 정보
+#### 백엔드
+- **REST ful**한 API
+- API 디렉토리는 resource기반 작명
+- **http-errors** 모듈 이용한 API에서의 HTTP 예외처리 (200,400,401,403,404,500 사용)
+- **middleware** 통한 권한별 접근제어
+- 회원가입시 암호화 설정(**crypto** 모듈 사용, 단방향 암호화)
+- 오픈소스이므로 **config**파일을 통한 핵심 설정파일(서버주소, 보안 등) 분리
+- token 발급 및 갱신 로직 (**JWT**: jsonwebtoken 모듈사용)
+- **moment.js** 모듈 도입(토큰 재발급시 사용)
+- **multer, sharp, image-data-uri**모듈 사용으로 이미지를 DB에 저장
+- **geolib**모듈을 통해 좌표간 거리 계산
+
+자세한 정보는
+- ### [서버 기술 문서](/be/README.md)
+
+#### 프론트엔드
+- 로그인시 **localStorage**에 **token**정보 저장
+- **Vuex**사용으로 전역적인 상태관리
+- **axios**를 통한 API접근
+- **axios intercepter** 새로고침 없이 로그인 하기
+- **vee-validate** 모듈 사용으로 회원가입 유효성 검사
+- **vue-daum-map**을 통한 지도 API 도입
+- 공용 알림메세지 사용 (**Vuex**로 전역등록, App.vue에 **snack-bar** 구현)
+```javascript
+// pop 사용법 (axios 응답에 대해 사용)
+if(!e.response) this.$store.commit('pop', { msg: e.message, color: 'error' })
+// if문이 붙는 이유는 router.js에서 api가 보낸 http-errors를 처리하기 때문이다(중복 snackbar 활성화 방지)
+```
+- 건의사항, 공지사항 및 마음의 편지함 에는 **Vue data Table**을 사용하여 검색, 정렬기능 구현(server-side pagenation 준비중)
+
+자세한 정보는
+- ### [프론트엔드 문서](/fe/README.md)
+
 ## 컴퓨터 구성 / 필수 조건 안내 (Prerequisites)
 
 ### 컴퓨터 환경
@@ -189,8 +229,8 @@
 
 ## 설치 안내 (Installation Process)
 #### 1. project clone 
-- ` $ git clone 주소`
-- ` $ cd JCommunity`
+- ` $ git clone https://github.com/osam2019/WEB_JCommunity_Solo.git`
+- ` $ cd WEB_JCommunity_Solo`
 #### 2. vue build
 - `$ cd fe`
 - `$ yarn` 
@@ -198,7 +238,7 @@
 - `$ cd ../be`
 - `$ yarn `
 #### 4. config 폴더 세팅
-- JCommunity 폴더에 config 폴더를 생성
+- WEB_JCommunity_Solo폴더에 config 폴더를 생성
 - index.js 파일을 만들고 아래의 코드를 복사 및 커스터마이징
 ```javascript
 module.exports  = {
@@ -240,13 +280,11 @@ module.exports  = {
 
 ## 사용법 (Getting Started)
 
-`$ yarn start` : JCommunity 위치에서 실행하면 웹서버가 실행됩니다. 
+`$ yarn start` : WEB_JCommunity_Solo에서 실행하면 웹서버가 실행됩니다. 
 
 ## 파일 정보 및 목록 (File Manifest)
 
-- ### [프론트엔드 문서](/fe/README.md)
-- ### [서버 기술 문서](/be/README.md)
-
+> 추가바람
 
 ## 저작권 및 사용권 정보 (Copyright / End User License)
 
@@ -265,7 +303,7 @@ module.exports  = {
 > 추가바람
 
 ## 크레딧 (Credit)
-> ?
+> 추가바람
 
 ## 업데이트 정보 (Change Log)
 - 191024 0.0.1
