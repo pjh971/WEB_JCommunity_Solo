@@ -71,12 +71,14 @@
 ## 페이지 및 서비스 설명
 #### 0. 인트로
 ![인트로](https://lh3.googleusercontent.com/hAiyVvEhSjEkNB7KVBcIQ3QsopAsldNl0i9ulVjzfGqmlLhDuAb-jDolUN5k1pmhVjcLsAp2CEQ=s1000)
+
 인트로 페이지이다.
 - 군사시설 접근금지 안내판을 차용하여 디자인되었다.
 - 로그인이 되지 않아 토큰이 없다면 이 페이지가 표시된다.
 
 #### 1. 로그인 
 ![로그인](https://lh3.googleusercontent.com/aWwFX2ZdEqfwuRaIf7PaazoG7PzigEabLJJQdsntn35NL8CX7sGGT-Th3m3Wfrwe1ENLxvX4-Xw=s500)
+
 로그인 페이지이다.
 - 본인의 아이디와 비밀번호를 이용하여 로그인한다. 
 - 기존의 회원이 아니라면, 회원가입을 진행한다. 
@@ -85,6 +87,7 @@
 
 #### 2. 회원가입 
 ![회원가입](https://lh3.googleusercontent.com/kaNQK1GLOdD92tRImUuvd_ChMQ_YnSIK9zyvOyoVn3BZFXMY9_sTITipCphiZUeRCaHMFaS8Mew=s500)
+
 회원가입 페이지이다.
 - 아이디, 비밀번호, 이름,  군번, 부대 정보로 회원가입이 가능하다. 
 - 부대 정보는 자동적으로 DB와 연동되며 유저정보는 부대 모델과 관계를 갖고 있기 때문에 같은 중대원들끼리만 정보가 공유된다.
@@ -92,6 +95,7 @@
 
 #### 3. 메인 대시보드
 ![중대 메인 대시보드](https://lh3.googleusercontent.com/MbWC_PmyN3O_HheZEQp2jG3Wkpai89t5QeONZQY4fiIEzJ7XqF3MfUPhcaHcTwXcNaZ5e2HfvDY=s1000)
+
 중대의 메인 대시보드이다. 
 - 좌측 Navigation의 메뉴를 이용해 다양한 서비스로 접근이 가능하다. 
 - 가운데 Parallex에는 부대를 소개하는 데이터가 표시되며,  4개의 카드에는 중대 관련 정보(접속중인 중대원, 출타자 현황, 최근 건의사항, 전체 게시물 등)이 실시간으로 업데이트 된다. 
@@ -101,18 +105,21 @@
 
 #### 4. 마음의 편지 작성
 ![마음의편지 작성 다이얼로그](https://lh3.googleusercontent.com/_BjsxiIfSR9oGjcgpduLoHCgMjo7jJS2zBo7jRCKa6Uwp1hk8LF2tb7m0WAj1d1EnCRotYaL9uQ=s500)
+
 마음의 편지 작성 다이얼로그 이다.
 - 하단의 메세지 형태의 버튼을 누르면 중대숲 어디서나 마음의 편지를 작성할 수 있다.
 - 수정이 불가능하므로, 부적절한 내용을 작성하지 말라는 주의 문구가 있다.
 
 #### 5. 마음의 편지함
 ![마음의 편지함](https://lh3.googleusercontent.com/baHQA_oHlpAhVRTkTw4TLHBIoF1dJ9j_Q56jG7eo_wWIvZRyUq6u-aeE-zU901tu4rgUclhMv1A=s1000)
+
 중대 마음의 편지함이다. 
 - 간부만 접근 가능하다.(API에서 page권한을 확인 후 허가시에만 접근가능)
 - 날짜순으로 정렬이 가능하다.
 
 #### 6. 마음의 편지
 ![마음의편지](https://lh3.googleusercontent.com/FlmgsLTZgVb-86JMRkpL_eepUkY71lz7O6wEmA3EFLcPQLhqyiLHI_2YBH8_J3mx8JFJzBlqSYU=s500)
+
 마음의 편지이다.
 - 마음의 편지함 리스트에서 아이템을 클릭하면 편지를 읽을 수 있다. 
 - 편지는 익명성이 보장되며 API에서 데이터를 넘겨줄 때 유저정보를 제거하여 응답한다. 혹
@@ -120,6 +127,7 @@
 
 #### 7. 공지사항
 ![공지사항 리스트](https://lh3.googleusercontent.com/zWk5JlnwuLGhIT4ZsAb28LQWw7qme2KyZt6mQ286mer6YAhrpvRFGBNK5oZVVlrEmtuRz4Nq9i4=s1000)
+
 공지사항 리스트이다.
 - 공지사항을 확인할 수 있다. 
 - 검색기능, 조회수와 날짜별 정렬이 가능하다. 
@@ -128,14 +136,15 @@
 
 #### 8. 건의사항 리스트
 ![건의사항 리스트](https://lh3.googleusercontent.com/KbiLLguu8GpOY9qD7s7ap5oDN4fc6aK4lDUHd1BRiVAOFOIz6NjsSPQhDAl6xdHsbdyc2_AZC6lW=s1000)
+
 건의사항 리스트이다. 
 - 글쓴이, 조회수, 추천, 날짜 순으로 정렬이 가능하다. 
 - 병사 이상의 권한이면 글을 작성할 수 있다.
 
 #### 9. 건의사항
 ![건의사항](https://lh3.googleusercontent.com/qWX7PF346_67lYekqzLwQau2hj8Q6gzkvZXuU1TwNJNXPCuLa51B7_6QAks5Yu6CsS_xBNqJ_JtW=s1000)
-건의사항이다. 
 
+건의사항이다. 
 - 건의사항과 관련된 내용이 카드에 출력되며 좋아요를 누를 수 있다. 
 - 좋아요를 한번누른 유저는 다시 누를 수 없다(LikeHistory 모델을 통해 건의사항과 유저를 담은 모델을 관리). 
 - 수정의 경우는 본인만 가능하며, 삭제는 자신보다 상위권한의 유저가 삭제할 수 있다. 
@@ -144,6 +153,7 @@
 
 #### 10. 복귀보고체계
 ![복귀보고체계](https://lh3.googleusercontent.com/Yc2dKr4IUAFMjYj2Wy_LaVbjb5eXHNNUK1BEspPvieJlhwiBkR4kNILtDG7gflYe9Ph7YPOm463C=s1000)
+
 복귀보고체계 서비스이다. 
 - 복귀 보고의 경우에는 날짜, 부대, 유저, 1보고, 2보고, 3보고, 현재 보고 타입을 담은 모델을 통해 이루어진다. 
 - 각 보고는 지역(시/군/구), 세부주소, 보고 좌표(lat, lng) 으로 구성되어 있다.
@@ -157,6 +167,7 @@
 
 #### 11. 중대원 복귀 현황
 ![중대원 복귀 현황](https://lh3.googleusercontent.com/iS4Y2IJHCJ6g1nfqzy1VkAqJN-bhS2rPRBBsbSiUMJ8JXsr6Is0AxH768rAdA73kZ8kmSYbL5_Ml=s1000)
+
 중대원들의 복귀현황을 파악할 수 있다.
 - 상단에 위치한 3가지 chip을 통해 오늘날짜, 복귀중인 인원, 복귀 정보가 로드된 시간을 알 수 있다.
 - 현황판에서는 복귀자, 마지막 보고위치, 보고정보를 알 수 있다. 
@@ -233,8 +244,8 @@ module.exports  = {
 
 ## 파일 정보 및 목록 (File Manifest)
 
-- ### 프론트엔드 문서  [링크](/fe/readme.md)
-- ### 서버 기술 문서 [링크](/be/readme.md)
+- ### [프론트엔드 문서](/fe/README.md)
+- ### [서버 기술 문서](/be/README.md)
 
 
 ## 저작권 및 사용권 정보 (Copyright / End User License)
