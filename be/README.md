@@ -193,6 +193,7 @@ PUT | /resources/suggestions/{ id } | 공지사항 수정 API(req에 담겨있�
 DELETE | /resources/suggestions/{ id } | 공지사항 삭제 API(req에 담겨있는 유저정보를 확인해 높은 권한도 삭제가능)(lv > 2)
 
 **combacks** (/resources/comebacks) [ lv > 3 ]
+
 Method | Url | Detail
 ---- | ---- | ----
 GET | /resources/comebacks/one | 유저가 복귀보고체계에 들어왔을 때 오늘, 해당유저, 유저의부대 데이터로 조회한 comeback 결과를 리턴한다. 없으면 복귀를 시작하지 않았다는 메세지를 보낸다
