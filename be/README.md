@@ -1,6 +1,10 @@
 # 중대숲 Server Document(API, WebServer)
-
+중대숲 Server 관련 설명
 ## Model
+
+![enter image description here](https://lh3.googleusercontent.com/gjJnjRWt0RZJENCqADhBiT4mx8ArNETNVVuCn9eQ_6zrgZ1DxqiJ4dNpZJcYQoplKkD0JRdzBI-j=s1000)
+
+
 ### page
 ![page](https://lh3.googleusercontent.com/4tdY1gAOOQctgHzsAOuI-iBphlfVUMSH1Vf6XqJXW2oujRLEQ4qcNAIMJFl8_X2jyYJ09ibsFQQ7=s500)
 
