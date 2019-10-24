@@ -24,6 +24,8 @@ Company.findOne({ name: cfg.company.name }) // admin계정이 없을 경우 생�
       return Company.create({
         name: cfg.company.name,
         phoneNumber: cfg.company.phoneNumber,
+        loc: cfg.company.loc,
+        explain: cfg.company.explain
       });
     return Promise.resolve(null);
   })
