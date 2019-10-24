@@ -12,7 +12,7 @@ router.get('/one', function(req, res, next) {
   const today = moment().format('YYYYMMDD')
 
   Comeback.findOne({createdDay: today, _user, _company})
-    .then(r => {
+    .then((r) => {
       if (!r) res.send({ success: false, msg: '복귀 시작 안함'})
       res.send({ success: true, d: r, token: req.token });
     })
@@ -51,7 +51,6 @@ router.post('/', function(req, res, next) {
       }
       const _id = r._id
       if (r.currentType === 1) {
-        console.log(r)
         if (r._company.loc.region !== loc.region)
           throw new Error('부대 위치와 같은 지역에서만 2보고가 가능합니다.')
         return Comeback.updateOne({ _id }, { $set: { currentType: 2, secondLoc: loc } }, { new: true })
@@ -60,9 +59,6 @@ router.post('/', function(req, res, next) {
         const comlatlng = r._company.loc.latlng
         const currentlatlng = loc.latlng
         const distance = geolib.getDistance(comlatlng, currentlatlng)
-        console.log(r._company.loc)
-        console.log(loc)
-        console.log(distance)
         if (distance > 1000)
           throw new Error('부대 반경 1km이내에서만 3보고가 가능합니다')
         return Comeback.updateOne({ _id }, { $set: { currentType: 3, thirdLoc: loc } }, { new: true })

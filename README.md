@@ -1,5 +1,6 @@
 # 중대숲(JCommunity)
 
+
 ![](https://lh3.googleusercontent.com/AiExm3VLAumnh5GPm6Hju-4K08awkcDuMy10y3aBQLjUot_WxtsqmPg7p_9MVMwkLfon2oVNb7M)
 
 중대숲은 **중대 내 소통 플랫폼** 입니다.  
@@ -7,13 +8,14 @@
 스마트폰 사용허가에 따라 용사들 간의 소통은 대부분 온라인을 기반으로 이루어지게 되었습니다. 이에 현재 많은 부대에서 시행되고 있는 **마음의 편지**,  **건의사항 설문**,  **공지사항** 등의 소통방식을 온라인 서비스로 구현했습니다. 
 
 중대숲에선
-> *아무에게도 들킬 염려가 없는*  **마음의 편지** 
-*댓글과 좋아요를 통해 다른병사들의 피드백을 받아볼 수 있는* **건의사항**    
-*가장 핫한 건의사항과 최신 공지사항, 실시간 부대 정보를 한눈에 볼 수 있는* **대시보드**
-*병사와 당직 사관 모두가 불편했던 기존 전화방식보고에서 탈피한* **복귀보고체계**
-*지금 다른 중대원들이 어디까지 복귀했는지 확인가능한* **중대원 복귀 현황**
->
-등의 서비스를 이용할 수 있습니다.
+
+- 아무에게도 들킬 염려가 없는  **마음의 편지** 
+- 댓글과 좋아요를 통해 다른병사들의 피드백을 받아볼 수 있는 **건의사항**    
+- 가장 핫한 건의사항과 최신 공지사항, 실시간 부대 정보를 한눈에 볼 수 있는 **대시보드**
+- 병사와 당직 사관 모두가 불편했던 기존 전화방식보고에서 탈피한 **복귀보고체계**
+- 지금 다른 중대원들이 어디까지 복귀했는지 확인가능한 **중대원 복귀 현황**
+
+과 같은 정말 많은 서비스를 이용할 수 있습니다.
 앞으로도 발전할 중대숲을 기대해 주세요!!
 
 ## 일반 현황
@@ -21,20 +23,109 @@
  - 인원 : 교육사령부 육군상병 김장영 (API & web서버,  Vue기반 SPA)
  - 개발 기간 : '19.10.21 ~ '19.10.25
 
+## 개발 배경
+
+하루에도 수만여명의 장병들이 휴가에 복귀하기 위해 택시를 이용하여 이동하게 되는데, 병사들에게 왕복 교통비는 출타 간에 큰 부담 중 하나이다.
+
+이에 목적지가 같은 주변의 전우들에게 신속하게 연락하여 교통비와 출타시간 절약 및 전우들과의 훈훈한 분위기를 느낄 수 있는 주변 전우들 다모아(Damoa) 애플리케이션을 개발하였다.  
+
+## 기대효과
+ - 출타 장병들의 택시비 부담을 덜어줌으로써 부대 복지가 향상된다.
+ - 출타 복귀 시간대에 택시 한대로 여러 병사가 이용함으로 택시 부족으로 인한 지연복귀를 예방할 수 있다.
+
+## 향후 추진 계획
+ - 인터넷망에 군 조직도를 둘 수는 없으므로 보안적인 측면을 고려해서 기능 개선이 필요하다.
+ - 채팅방에서의 푸시 알림 추가 기능이 필요하다.
+ - 부대 조직을 관리할 수 있는 관리자 페이지가 필요하다.
+ - 각군 인사행정 서비스, 핀테크 또는 운송 서비스와 융합.
+
+## 페이지구성
+#### 1. 로그인 
+
+본인의 군번과 비밀번호를 이용하여 로그인한다. 기존의 회원이 아니라면, 회원가입을 진행한다.
+
+#### 2. 회원가입 
+
+군번, 이름, 전화번호로 회원가입이 가능하다. 전화번호는 승인 시 타인에게 보여줄 수 있어 빠른 연락이 필요할 때 사용할 수 있다.
+
+#### 3. 부대검색 
+
+자신이 소속된 부대(출발 또는 도착지)를 검색한다.
+
+#### 4. 채팅방 
+
+같은 소속의 부대원들과 연락하여 동일한 목적지로 가는 전우들과 일정을 조율한다.
+
+#### 5. 위치 공유방
+
+같은 채팅방에 접속한 국군장병들의 위치를 공유하여 시간 또는 장소를 쉽게 선정할 수 있다.
+
+
+- - -
+
+# Document
 ## 컴퓨터 구성 / 필수 조건 안내 (Prerequisites)
 
 ### 컴퓨터 환경
  - Node.js가 설치되어 있어야 합니다.
  - 인터넷 접속이 필요합니다(지도 API 사용)
- - MongoDB 설치 (Local DB를 사용시, config에서 dbUrl 변경가능)
+  - chrome 사용권장
+ - MongoDB 설치 (필수 x,  Local DB를 사용시에만 설치)
 
 ## 설치 안내 (Installation Process)
-
-The file explorer is accessible using the button in left corner of the navigation bar. You can create a new file by clicking the **New file** button in the file explorer. You can also create folders by clicking the **New folder** button.
+#### 1. project clone 
+- ` $ git clone 주소`
+- ` $ cd JCommunity`
+#### 2. vue build
+- `$ cd fe`
+- `$ yarn` 
+#### 3. node module install
+- `$ cd ../be`
+- `$ yarn `
+#### 4. config 폴더 세팅
+- JCommunity 폴더에 config 폴더를 생성
+- index.js 파일을 만들고 아래의 코드를 복사 및 커스터마이징
+```javascript
+module.exports  = {
+	dbUrl: 'mongodb+srv://anyone:jChIomXu6dNDtS0X@cluster0-ozwyu.mongodb.net/J_community',
+	// db를 MongoDB Atlas서버와 연동(모든 아이피에서 접근가능)
+	// dbUrl: 'mongodb://localhost:27017/JCommunity' // 로컬 DB사용시
+	// admin과 company는 서버 처음 동작시 localDB에 데이터를 생성하기 위함임, 값바꿔도 상관 없음
+	admin: {
+		id: 'admin',
+		pwd: '1q2w3e4r!',
+		name: '관리자',
+		number: '00-12345678',
+	},
+	company: {
+		name: '국방부',
+		phoneNumber:'02-123-4567',
+		loc: {
+			latlng: {
+				latitude: 126.9755402997576,
+				longitude: 37.52980156173816
+			},
+			region: '서울특별시 용산구',
+			address: '서울 용산구 용산동3가 9'
+		},
+		explain:  '대한민국 국방부'
+	},
+	// 토큰 발급 및 재발급을 위한 jsonwebtoken 설정값
+	jwt: {
+		secretKey:  'very very secret',
+		subject:  'token',
+		issuer:  'xxx.com',
+		algorithm:  'HS256',
+		expiresIn:  60  *  3, // 기본 3분
+		expiresInRemember:  60  *  60  *  24  *  6 ,// 기억하기 눌렀을 때 6일
+		expiresInDiv:  3  // 토큰시간 나누는 기준
+	}
+}
+```
 
 ## 사용법 (Getting Started)
 
-All your files and folders are presented as a tree in the file explorer. You can switch from one to another by clicking a file in the tree.
+`$ yarn start`
 
 ## 파일 정보 및 목록 (File Manifest)
 
@@ -42,11 +133,11 @@ You can rename the current file by clicking the file name in the navigation bar 
 
 ## 저작권 및 사용권 정보 (Copyright / End User License)
 
-You can delete the current file by clicking the **Remove** button in the file explorer. The file will be moved into the **Trash** folder and automatically deleted after 7 days of inactivity.
+@Jay_Kim
 
 ## 배포자 및 개발자의 연락처 정보 (Contact Information)
 
-You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
+- Jay_Kim (dkel03@korea.ac.kr)
 
 ## 알려진 버그 (Known Issues)
 
